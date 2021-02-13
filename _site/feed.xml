@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://nhopewell.github.io/jekyll-import-this//feed.xml" rel="self" type="application/atom+xml" /><link href="https://nhopewell.github.io/jekyll-import-this//" rel="alternate" type="text/html" /><updated>2021-02-12T18:47:51-05:00</updated><id>https://nhopewell.github.io/jekyll-import-this//feed.xml</id><title type="html">import-this</title><subtitle>This is my personal coding blog. As the name implies, I talk a lot about Python.</subtitle><entry><title type="html">The ‘is’ operator and the interpreter</title><link href="https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator.html" rel="alternate" type="text/html" title="The ‘is’ operator and the interpreter" /><published>2021-02-11T10:25:00-05:00</published><updated>2021-02-11T10:25:00-05:00</updated><id>https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator</id><content type="html" xml:base="https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator.html">&lt;p&gt;The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; x = 256
+&amp;gt;&amp;gt;&amp;gt; y = 256
+&amp;gt;&amp;gt;&amp;gt; x is y
+True
+
+&amp;gt;&amp;gt;&amp;gt; x = 257
+&amp;gt;&amp;gt;&amp;gt; y = 257
+&amp;gt;&amp;gt;&amp;gt; x is y
+False
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;First, let’s talk about what &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is&lt;/code&gt; actually…is.&lt;/p&gt;
+
+&lt;p&gt;Unlike &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;==&lt;/code&gt; which compares &lt;em&gt;values&lt;/em&gt; for equality, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is&lt;/code&gt; operator checks if both operands refer to the same object.  In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is&lt;/code&gt; checks if the identity of both operands match or not. You can check this yourself with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; x = 256
+&amp;gt;&amp;gt;&amp;gt; id(x)
+4381006464
+&amp;gt;&amp;gt;&amp;gt; y = 256
+&amp;gt;&amp;gt;&amp;gt; id(y)
+4381006464
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can see that these variables x and y are pointing to the same object in memory (they both have the same ids). This still does not make a lot of sense. If we do the same with a value of 257 given to x and y, we see that their ids are not the same anymore.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; x = 257
+&amp;gt;&amp;gt;&amp;gt; id(x)
+140476436035088
+&amp;gt;&amp;gt;&amp;gt; y = 257
+&amp;gt;&amp;gt;&amp;gt; id(y)
+140476436034992
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So what’s going on here?&lt;/p&gt;
+
+&lt;p&gt;The answer is that 256 is already an object when you launch python, while 257 is not. You can read this in the &lt;a href=&quot;https://docs.python.org/3/c-api/long.html&quot;&gt;documentation&lt;/a&gt;. It states:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The current implementation keeps an array of integer objects for all integers between -5 and 256, when you create an int in that range you actually just get back a reference to the existing object.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So when we say &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x = 256&lt;/code&gt; we are giving x a reference to an existing object. If we do the same for y, we get the same reference. But this is not true when we assign an integer to x or y which is outside of this range (-5 to 256).&lt;/p&gt;
+
+&lt;p&gt;So why are only numbers from -5 to 256 stored as objects when you start Python? Simply because these are common numbers which are used a lot. It makes sense to have them already floating around for use.&lt;/p&gt;
+
+&lt;p&gt;When we assign 257 to y right after assigning 257 to x, the interpreter does not know that we just created an integer with a value of 257, so it goes ahead and creates another object (with a different id). The same thing happens with immutable objects. Because lists are mutable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[] is []&lt;/code&gt; with always return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;False&lt;/code&gt; but if we do the same with empty tuples (which are immutable), we see that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;() is ()&lt;/code&gt; will return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;True&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;But it gets even more interesting when we &lt;strong&gt;initialize two variables with the same value on the same line&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; x, y = 257, 257
+&amp;gt;&amp;gt;&amp;gt; x is y
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, for some reason, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x is y&lt;/code&gt; returns &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;True&lt;/code&gt; when both are given a value of 257. Which was not the case when we assigned 257 to these variables on different lines.&lt;/p&gt;
+
+&lt;p&gt;Like previously mentioned, when we set x and y to 257 on different lines, the interpreter doesn’t know we already created this object in memory and so a new one is created. But, when we do this all on one line, Python creates a new object AND references the second variable (y) at the same time. Thus giving both x and y a reference to the same object with the same id. Which explains why the is operator acts like it does.&lt;/p&gt;
+
+&lt;p&gt;The explaination for this is one of optimization within an interactive environment (like a repr). When 2 lines are entered into the interpreter they are handled separately, and optimized separately. If you tried to reconstruct this experiment within a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.py&lt;/code&gt; file and run it, this behaviour would not happen as the optimization outside of an interactive environment works holistically.&lt;/p&gt;</content><author><name></name></author><summary type="html">The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?</summary></entry></feed>
