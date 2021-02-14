@@ -5,7 +5,7 @@ date:   2021-02-11 10:25:00 -0500
 ---
 The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?
 
-```python3
+```python
 >>> x = 256
 >>> y = 256
 >>> x is y
@@ -21,7 +21,7 @@ First, let's talk about what ```is``` actually...is.
 
 Unlike ```==``` which compares *values* for equality, the ```is``` operator checks if both operands refer to the same object.  In other words, ```is``` checks if the identity of both operands match or not. You can check this yourself with ```id()```.
 
-```python3
+```python
 >>> x = 256
 >>> id(x)
 4381006464
@@ -32,7 +32,7 @@ Unlike ```==``` which compares *values* for equality, the ```is``` operator chec
 
 We can see that these variables x and y are pointing to the same object in memory (they both have the same ids). This still does not make a lot of sense. If we do the same with a value of 257 given to x and y, we see that their ids are not the same anymore.
 
-```python3
+```python
 >>> x = 257
 >>> id(x)
 140476436035088
@@ -54,7 +54,7 @@ When we assign 257 to y right after assigning 257 to x, the interpreter does not
 
 But it gets even more interesting when we **initialize two variables with the same value on the same line**:
 
-```python3
+```python
 >>> x, y = 257, 257
 >>> x is y
 True

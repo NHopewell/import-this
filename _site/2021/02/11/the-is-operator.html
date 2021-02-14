@@ -49,38 +49,38 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?</p>
 
-<pre><code class="language-python3">&gt;&gt;&gt; x = 256
-&gt;&gt;&gt; y = 256
-&gt;&gt;&gt; x is y
-True
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="ow">is</span> <span class="n">y</span>
+<span class="bp">True</span>
 
-&gt;&gt;&gt; x = 257
-&gt;&gt;&gt; y = 257
-&gt;&gt;&gt; x is y
-False
-</code></pre>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">257</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">257</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="ow">is</span> <span class="n">y</span>
+<span class="bp">False</span>
+</code></pre></div></div>
 
 <p>First, let’s talk about what <code class="language-plaintext highlighter-rouge">is</code> actually…is.</p>
 
 <p>Unlike <code class="language-plaintext highlighter-rouge">==</code> which compares <em>values</em> for equality, the <code class="language-plaintext highlighter-rouge">is</code> operator checks if both operands refer to the same object.  In other words, <code class="language-plaintext highlighter-rouge">is</code> checks if the identity of both operands match or not. You can check this yourself with <code class="language-plaintext highlighter-rouge">id()</code>.</p>
 
-<pre><code class="language-python3">&gt;&gt;&gt; x = 256
-&gt;&gt;&gt; id(x)
-4381006464
-&gt;&gt;&gt; y = 256
-&gt;&gt;&gt; id(y)
-4381006464
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="mi">4381006464</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="mi">4381006464</span>
+</code></pre></div></div>
 
 <p>We can see that these variables x and y are pointing to the same object in memory (they both have the same ids). This still does not make a lot of sense. If we do the same with a value of 257 given to x and y, we see that their ids are not the same anymore.</p>
 
-<pre><code class="language-python3">&gt;&gt;&gt; x = 257
-&gt;&gt;&gt; id(x)
-140476436035088
-&gt;&gt;&gt; y = 257
-&gt;&gt;&gt; id(y)
-140476436034992
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">257</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="mi">140476436035088</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">257</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="mi">140476436034992</span>
+</code></pre></div></div>
 <p>So what’s going on here?</p>
 
 <p>The answer is that 256 is already an object when you launch python, while 257 is not. You can read this in the <a href="https://docs.python.org/3/c-api/long.html">documentation</a>. It states:</p>
@@ -97,10 +97,10 @@ False
 
 <p>But it gets even more interesting when we <strong>initialize two variables with the same value on the same line</strong>:</p>
 
-<pre><code class="language-python3">&gt;&gt;&gt; x, y = 257, 257
-&gt;&gt;&gt; x is y
-True
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">257</span><span class="p">,</span> <span class="mi">257</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="ow">is</span> <span class="n">y</span>
+<span class="bp">True</span>
+</code></pre></div></div>
 
 <p>Now, for some reason, <code class="language-plaintext highlighter-rouge">x is y</code> returns <code class="language-plaintext highlighter-rouge">True</code> when both are given a value of 257. Which was not the case when we assigned 257 to these variables on different lines.</p>
 

@@ -8,7 +8,7 @@ I often hear new Python devs who come from other languages refer to Python lists
 At first glance, this is not a big deal. Lists do behave just like arrays on the surface. They are both sliced in the same way, they are both accessed in the same way, they can both be extended and appended to in the same way, etc. But there are some very key differences between the two.
 
 The first difference is that lists can hold heterogenous data types. This means I can make a list mixed with ints, strings, and nested lists, like this one : 
-```python3
+```python
 my_ list = [1, 2, 'nick', [3, 'sam']]
 ```
 This makes lists are more flexible than arrays as arrays are restricted to containing a single data type (usually ints or floats). But, this flexibility results in lists using a lot more memory than arrays.   
@@ -16,7 +16,7 @@ This makes lists are more flexible than arrays as arrays are restricted to conta
 The flexibility of lists is so nice that some Python devs do not even know that Python has a C-style array, always opting for a list data structure instead. 
 
 Here is how a double type array is allocated (the first argument denotes the type):
-```python3
+```python
 >>> import array
 >>> new_array = array.array('d', [1, 2, 3, 4, 5])
 >>> print(new_array)
@@ -39,7 +39,7 @@ Good question. Because lists do not need to be contiguous in memory nor of the s
 
 Arrays might be better to use if you need to store a large amount of one data type (typically numeric) and need to do computationally heavy math operations on the data. If you need to do a lot of math, I would recommend using the Numpy array as it is the most optimized data structure for this sort of task. The Numpy array is the data structure core to most Python machine learning libraries (which have to do a lot of linear algebra), and are the building blocks of the Pandas dataframe.
 
-```python3
+```python
 >>> import numpy as np
 >>> numpy_array = np.array([1, 2, 3, 4, 5])
 >>> print(numpy_array)

@@ -6,7 +6,7 @@ date:   2021-02-13 10:25:00 -0500
 
 You've probably realized that Pythons most common for loop is actually a foreach loop. A foreach loop does not keep track of any counter. It says "do something for each item in this collection" rather than "do something x number of times" like a traditional for loop does. If you have an iterable data structure that you want to iterate through, you can loop over its items directly like so:
 
-```python3
+```python
 >>> names = 'nick sam ben larry'.split()
 >>> for name in names:
 ...     print(name)
@@ -18,7 +18,7 @@ larry
 ```
 
 ```range()``` is a builtin which is nice for looping over a sequence of integers easily:
-```python3
+```python
 >>> for i in range(1, 11, 2):
 ...     print(i)
 ... 
@@ -31,7 +31,7 @@ larry
 
 But its quite common to want to loop over all the items in a list while also keeping track of the index of each item. A non-pythonic
 way to do this is to use range (which is meant for looping over integers) like so:
-```python3
+```python
 >>> for i in range(len(names)):
 ...     print(f"{i}: {names[i]}")
 ... 
@@ -45,7 +45,7 @@ This is needlessly clunky. We need to compute the length of the array and index 
 
 ```enumerate()``` **will wrap any iterator with a lazy generator** which will yield tuples each time next is called. The tuples that enumerate yields are the index of the item and the item itself. Like this: (index, item). We can keep calling next on our names list directly to see this in action:
 
-```python3
+```python
 >>> names_enum = enumerate(names)
 >>> print(next(names_enum))
 (0, 'nick')
@@ -58,7 +58,7 @@ This is needlessly clunky. We need to compute the length of the array and index 
 ```
 
 We can use a for loop to call next until stop iteration occurs, each loop yeilding these tuples, like so:
-```python3
+```python
 >>> for i, name in enumerate(names):
 ...     print(f"{i}: {name}")
 ... 
@@ -69,7 +69,7 @@ We can use a for loop to call next until stop iteration occurs, each loop yeildi
 ```
 
 And something that many Python developers forget is that ```enumerate()``` **takes a second argument** which is the index to start with:
-```python3
+```python
 >>> for i, name in enumerate(names, 1):
 ...     print(f"{i}: {name}")
 ... 

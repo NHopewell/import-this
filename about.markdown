@@ -6,7 +6,7 @@ title: About
 
 My name is Nick Hopewell. This is my personal blog about all things coding which I find interesting (and hope others do too). 
 At the time of starting this blog, I am a Python developer professionally and I have a serious interest in the Python ecosystem. 
-I doubt I will end up only talking about Python stuff, we will see as it progresses.
+I doubt, however, I will end up only talking about Python stuff.
 
 Python makes programming fun again. Don't belive me? Just type the snippet below into your repr. 
 

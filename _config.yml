@@ -23,7 +23,7 @@ email: nicholashopewell@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   This is my personal coding blog. As the name implies, I talk a lot about
   Python.
-baseurl: "import-this" # the subpath of your site, e.g. /blog
+baseurl: "/import-this" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  NHopewell
 
