@@ -28,7 +28,7 @@ True
 False
 ```
 
-Find out why this is the caseby clicking  here.  <---
+Find out why this is the case by [clicking here](https://nhopewell.github.io/import-this/2021/02/11/the-is-operator.html)
 
 I have interest in getting involved with the Python community, so if you find this stuff interesting, please reach out to me. 
 
