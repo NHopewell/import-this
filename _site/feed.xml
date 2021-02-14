@@ -1,4 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://nhopewell.github.io/jekyll-import-this//feed.xml" rel="self" type="application/atom+xml" /><link href="https://nhopewell.github.io/jekyll-import-this//" rel="alternate" type="text/html" /><updated>2021-02-12T18:47:51-05:00</updated><id>https://nhopewell.github.io/jekyll-import-this//feed.xml</id><title type="html">import-this</title><subtitle>This is my personal coding blog. As the name implies, I talk a lot about Python.</subtitle><entry><title type="html">The ‘is’ operator and the interpreter</title><link href="https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator.html" rel="alternate" type="text/html" title="The ‘is’ operator and the interpreter" /><published>2021-02-11T10:25:00-05:00</published><updated>2021-02-11T10:25:00-05:00</updated><id>https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator</id><content type="html" xml:base="https://nhopewell.github.io/jekyll-import-this//2021/02/11/the-is-operator.html">&lt;p&gt;The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/import-this/feed.xml" rel="self" type="application/atom+xml" /><link href="/import-this/" rel="alternate" type="text/html" /><updated>2021-02-13T21:37:55-05:00</updated><id>/import-this/feed.xml</id><title type="html">import-this</title><subtitle>This is my personal coding blog. As the name implies, I talk a lot about Python.</subtitle><entry><title type="html">Lists are not Arrays</title><link href="/import-this/2021/02/12/lists-are-not-arrays.html" rel="alternate" type="text/html" title="Lists are not Arrays" /><published>2021-02-12T10:25:00-05:00</published><updated>2021-02-12T10:25:00-05:00</updated><id>/import-this/2021/02/12/lists-are-not-arrays</id><content type="html" xml:base="/import-this/2021/02/12/lists-are-not-arrays.html">&lt;p&gt;I often hear new Python devs who come from other languages refer to Python lists as arrays. 
+At first glance, this is not a big deal. Lists do behave just like arrays on the surface. They are both sliced in the same way, they are both accessed in the same way, they can both be extended and appended to in the same way, etc. But there are some very key differences between the two.&lt;/p&gt;
+
+&lt;p&gt;The first difference is that lists can hold heterogenous data types. This means I can make a list mixed with ints, strings, and nested lists, like this one :&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;my_ list = [1, 2, 'nick', [3, 'sam']]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This makes lists are more flexible than arrays as arrays are restricted to containing a single data type (usually ints or floats). But, this flexibility results in lists using a lot more memory than arrays.&lt;/p&gt;
+
+&lt;p&gt;The flexibility of lists is so nice that some Python devs do not even know that Python has a C-style array, always opting for a list data structure instead.&lt;/p&gt;
+
+&lt;p&gt;Here is how a double type array is allocated (the first argument denotes the type):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; import array
+&amp;gt;&amp;gt;&amp;gt; new_array = array.array('d', [1, 2, 3, 4, 5])
+&amp;gt;&amp;gt;&amp;gt; print(new_array)
+array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Under the hood, lists and arrays are represented differently in memory. An array pointer points to the head of the array itself (the address of the first element of the array). And the array itself is a contiguous set of elements in memory. So just like an array in C, if we have a pointer to the head, along with the length of the array, we can easily operate on that array.&lt;/p&gt;
+
+&lt;p&gt;Lists, on the other hand, do not contain elements which are contiguously arrange in memory. Instead, a list points to the head of a block of pointers. Each pointer in this block points to a complete Python object somewhere else in memory (each member of the list).&lt;/p&gt;
+
+&lt;p&gt;This is shown below:
+&lt;img src=&quot;../../../images/list_vs_array.png&quot; alt=&quot;list_pic&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;By pointing to the head of a pointer block, Python lists give the illusion of being contiguous in memory even though they do not have to be arranged as so.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So when should I use a list? When should I use an array?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Good question. Because lists do not need to be contiguous in memory nor of the same type, new elements can be appended very efficiently. If you believe your data structure will grow and shrink a lot, it makes sense to use a list. You should also use a list if you need to store many different data types.&lt;/p&gt;
+
+&lt;p&gt;Arrays might be better to use if you need to store a large amount of one data type (typically numeric) and need to do computationally heavy math operations on the data. If you need to do a lot of math, I would recommend using the Numpy array as it is the most optimized data structure for this sort of task. The Numpy array is the data structure core to most Python machine learning libraries (which have to do a lot of linear algebra), and are the building blocks of the Pandas dataframe.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; import numpy as np
+&amp;gt;&amp;gt;&amp;gt; numpy_array = np.array([1, 2, 3, 4, 5])
+&amp;gt;&amp;gt;&amp;gt; print(numpy_array)
+[1 2 3 4 5]
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><summary type="html">I often hear new Python devs who come from other languages refer to Python lists as arrays. At first glance, this is not a big deal. Lists do behave just like arrays on the surface. They are both sliced in the same way, they are both accessed in the same way, they can both be extended and appended to in the same way, etc. But there are some very key differences between the two.</summary></entry><entry><title type="html">The ‘is’ operator and the interpreter</title><link href="/import-this/2021/02/11/the-is-operator.html" rel="alternate" type="text/html" title="The ‘is’ operator and the interpreter" /><published>2021-02-11T10:25:00-05:00</published><updated>2021-02-11T10:25:00-05:00</updated><id>/import-this/2021/02/11/the-is-operator</id><content type="html" xml:base="/import-this/2021/02/11/the-is-operator.html">&lt;p&gt;The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-python3&quot;&gt;&amp;gt;&amp;gt;&amp;gt; x = 256
 &amp;gt;&amp;gt;&amp;gt; y = 256
@@ -57,4 +93,4 @@ True
 
 &lt;p&gt;Like previously mentioned, when we set x and y to 257 on different lines, the interpreter doesn’t know we already created this object in memory and so a new one is created. But, when we do this all on one line, Python creates a new object AND references the second variable (y) at the same time. Thus giving both x and y a reference to the same object with the same id. Which explains why the is operator acts like it does.&lt;/p&gt;
 
-&lt;p&gt;The explaination for this is one of optimization within an interactive environment (like a repr). When 2 lines are entered into the interpreter they are handled separately, and optimized separately. If you tried to reconstruct this experiment within a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.py&lt;/code&gt; file and run it, this behaviour would not happen as the optimization outside of an interactive environment works holistically.&lt;/p&gt;</content><author><name></name></author><summary type="html">The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?</summary></entry></feed>
+&lt;p&gt;The explaination for this is one of optimization within an interactive environment (like a repr). When 2 lines are entered into the interpreter they are handled separately, and optimized separately. If you tried to reconstruct this experiment within a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.py&lt;/code&gt; file and run it, this behaviour would not happen. It wouldn’t happen because the optimization outside of an interactive environment, such as running an entire script, works holistically.&lt;/p&gt;</content><author><name></name></author><summary type="html">The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?</summary></entry></feed>
