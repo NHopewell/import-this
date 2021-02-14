@@ -4,7 +4,7 @@ title:  "Pythonic looping"
 date:   2021-02-13 10:25:00 -0500
 ---  
 
-You've probably realized that Pythons most common for loop is actually a foreach loop. If you have an iterable data structure that you want to iterate through, you can loop over its items directly like so:
+You've probably realized that Pythons most common for loop is actually a foreach loop. A foreach loop does not keep track of any counter. It says "do something for each item in this collection" rather than "do something x number of times" like a traditional for loop does. If you have an iterable data structure that you want to iterate through, you can loop over its items directly like so:
 
 ```python3
 >>> names = 'nick sam ben larry'.split()
