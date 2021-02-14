@@ -11,10 +11,10 @@ lengths of those names, I can iterate over both lists at once like so:
 >>> for name, length in zip(names, name_lengths):
 ...     print(f"{name} is length {length}")
 ... 
-nick is length 4
-sam is length 3
-ben is length 3
-larry is length 5
+# nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
 ```
 
 One important issue which can come up when using ```zip()``` is that it stops yeilding results once it reaches the length of the smallest list. So if I add another name to the names list, but don't add an accompanying length to the names_lengths list, ```zip()``` will stop once it has exhausted the names_lengths list:
@@ -23,10 +23,10 @@ One important issue which can come up when using ```zip()``` is that it stops ye
 >>> for name, length in zip(names, name_lengths):
 ...     print(f"{name} is length {length}")
 ... 
-nick is length 4
-sam is length 3
-ben is length 3
-larry is length 5
+# nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
 ```
 Where is Sarah? Is she gone? did ```zip()``` kill Sarah?!?!  
 
@@ -38,11 +38,11 @@ This behaviour is fine most of the time because we often want to iterate through
 >>> for name, length in itertools.zip_longest(names, name_lengths):
 ...     print(f"{name} is length {length}")
 ... 
-nick is length 4
-sam is length 3
-ben is length 3
-larry is length 5
-sarah is length None
+# nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+# sarah is length None
 ```
 And there we go, ```itertools.zip_longest()``` saved Sarah!  
 
@@ -51,11 +51,11 @@ Notice above that we probably don't want to print "sarah is length None". Sarah 
 >>> for n, l in itertools.zip_longest(names, name_lengths, fillvalue="Unknown"):
 ...     print(f"{n} is length {l}")
 ... 
-nick is length 4
-sam is length 3
-ben is length 3
-larry is length 5
-sarah is length Unknown
+# nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+# sarah is length Unknown
 ```
 ```itertools.zip_longest()``` is roughly equivalent to:
 ```python

@@ -20,7 +20,7 @@ Here is how a double type array is allocated (the first argument denotes the typ
 >>> import array
 >>> new_array = array.array('d', [1, 2, 3, 4, 5])
 >>> print(new_array)
-array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
+# array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
 ```
 
 Under the hood, lists and arrays are represented differently in memory. An array pointer points to the head of the array itself (the address of the first element of the array). And the array itself is a contiguous set of elements in memory. So just like an array in C, if we have a pointer to the head, along with the length of the array, we can easily operate on that array.  
@@ -43,5 +43,5 @@ Arrays might be better to use if you need to store a large amount of one data ty
 >>> import numpy as np
 >>> numpy_array = np.array([1, 2, 3, 4, 5])
 >>> print(numpy_array)
-[1 2 3 4 5]
+# [1 2 3 4 5]
 ```

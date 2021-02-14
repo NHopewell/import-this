@@ -9,12 +9,12 @@ The Python code below evaluates to True given a value of 256, but False when giv
 >>> x = 256
 >>> y = 256
 >>> x is y
-True
+# True
 
 >>> x = 257
 >>> y = 257
 >>> x is y
-False
+# False
 ```
 
 First, let's talk about what ```is``` actually...is. 
@@ -24,10 +24,10 @@ Unlike ```==``` which compares *values* for equality, the ```is``` operator chec
 ```python
 >>> x = 256
 >>> id(x)
-4381006464
+# 4381006464
 >>> y = 256
 >>> id(y)
-4381006464
+# 4381006464
 ```
 
 We can see that these variables x and y are pointing to the same object in memory (they both have the same ids). This still does not make a lot of sense. If we do the same with a value of 257 given to x and y, we see that their ids are not the same anymore.
@@ -35,10 +35,10 @@ We can see that these variables x and y are pointing to the same object in memor
 ```python
 >>> x = 257
 >>> id(x)
-140476436035088
+# 140476436035088
 >>> y = 257
 >>> id(y)
-140476436034992
+# 140476436034992
 ```
 So what's going on here? 
 
@@ -57,7 +57,7 @@ But it gets even more interesting when we **initialize two variables with the sa
 ```python
 >>> x, y = 257, 257
 >>> x is y
-True
+# True
 ```
 
 Now, for some reason, ```x is y``` returns ```True``` when both are given a value of 257. Which was not the case when we assigned 257 to these variables on different lines. 
