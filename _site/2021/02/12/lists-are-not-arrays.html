@@ -61,8 +61,8 @@ At first glance, this is not a big deal. Lists do behave just like arrays on the
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">array</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">new_array</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="s">'d'</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">new_array</span><span class="p">)</span>
-<span class="n">array</span><span class="p">(</span><span class="s">'d'</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])</span>
-</code></pre></div></div>
+<span class="c1"># array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
+</span></code></pre></div></div>
 
 <p>Under the hood, lists and arrays are represented differently in memory. An array pointer points to the head of the array itself (the address of the first element of the array). And the array itself is a contiguous set of elements in memory. So just like an array in C, if we have a pointer to the head, along with the length of the array, we can easily operate on that array.</p>
 
@@ -82,8 +82,8 @@ At first glance, this is not a big deal. Lists do behave just like arrays on the
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">numpy_array</span><span class="p">)</span>
-<span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">]</span>
-</code></pre></div></div>
+<span class="c1"># [1 2 3 4 5]
+</span></code></pre></div></div>
 
   </div><a class="u-url" href="/import-this/2021/02/12/lists-are-not-arrays.html" hidden></a>
 </article>

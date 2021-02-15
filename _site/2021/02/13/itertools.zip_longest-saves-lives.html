@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.2.0" />
 <meta property="og:title" content="itertools.zip_longest() saves lives" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... nick is length 4 sam is length 3 ben is length 3 larry is length 5" />
-<meta property="og:description" content="We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... nick is length 4 sam is length 3 ben is length 3 larry is length 5" />
+<meta name="description" content="We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... # nick is length 4 # sam is length 3 # ben is length 3 # larry is length 5" />
+<meta property="og:description" content="We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... # nick is length 4 # sam is length 3 # ben is length 3 # larry is length 5" />
 <link rel="canonical" href="/import-this/2021/02/13/itertools.zip_longest-saves-lives.html" />
 <meta property="og:url" content="/import-this/2021/02/13/itertools.zip_longest-saves-lives.html" />
 <meta property="og:site_name" content="import-this" />
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="itertools.zip_longest() saves lives" />
 <script type="application/ld+json">
-{"url":"/import-this/2021/02/13/itertools.zip_longest-saves-lives.html","headline":"itertools.zip_longest() saves lives","datePublished":"2021-02-13T10:26:00-05:00","dateModified":"2021-02-13T10:26:00-05:00","description":"We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... nick is length 4 sam is length 3 ben is length 3 larry is length 5","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/13/itertools.zip_longest-saves-lives.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"/import-this/2021/02/13/itertools.zip_longest-saves-lives.html","headline":"itertools.zip_longest() saves lives","datePublished":"2021-02-13T10:26:00-05:00","dateModified":"2021-02-13T10:26:00-05:00","description":"We know how great zip() is for processing multiple iterators in parrallel. If I have a list of names and another list of the lengths of those names, I can iterate over both lists at once like so: &gt;&gt;&gt; names = &quot;nick sam ben larry&quot;.split() &gt;&gt;&gt; name_lengths = [len(name) for name in names] &gt;&gt;&gt; for name, length in zip(names, name_lengths): ... print(f&quot;{name} is length {length}&quot;) ... # nick is length 4 # sam is length 3 # ben is length 3 # larry is length 5","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/13/itertools.zip_longest-saves-lives.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
 <body><header class="site-header" role="banner">
@@ -54,22 +54,22 @@ lengths of those names, I can iterate over both lists at once like so:</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name_lengths</span><span class="p">):</span>
 <span class="p">...</span>     <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> is length </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="p">...</span> 
-<span class="n">nick</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">4</span>
-<span class="n">sam</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">ben</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">larry</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">5</span>
-</code></pre></div></div>
+<span class="c1"># nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+</span></code></pre></div></div>
 
 <p>One important issue which can come up when using <code class="language-plaintext highlighter-rouge">zip()</code> is that it stops yeilding results once it reaches the length of the smallest list. So if I add another name to the names list, but don’t add an accompanying length to the names_lengths list, <code class="language-plaintext highlighter-rouge">zip()</code> will stop once it has exhausted the names_lengths list:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"sarah"</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name_lengths</span><span class="p">):</span>
 <span class="p">...</span>     <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> is length </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="p">...</span> 
-<span class="n">nick</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">4</span>
-<span class="n">sam</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">ben</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">larry</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">5</span>
-</code></pre></div></div>
+<span class="c1"># nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+</span></code></pre></div></div>
 <p>Where is Sarah? Is she gone? did <code class="language-plaintext highlighter-rouge">zip()</code> kill Sarah?!?!</p>
 
 <p>This behaviour is fine most of the time because we often want to iterate through one list along with a second list which was derived from the first (such as a list of lengths). But sometimes we want to iterate through both until we exhaust the longest list (not killing poor Sarah).</p>
@@ -79,24 +79,24 @@ lengths of those names, I can iterate over both lists at once like so:</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="n">zip_longest</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name_lengths</span><span class="p">):</span>
 <span class="p">...</span>     <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s"> is length </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="p">...</span> 
-<span class="n">nick</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">4</span>
-<span class="n">sam</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">ben</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">larry</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">5</span>
-<span class="n">sarah</span> <span class="ow">is</span> <span class="n">length</span> <span class="bp">None</span>
-</code></pre></div></div>
+<span class="c1"># nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+# sarah is length None
+</span></code></pre></div></div>
 <p>And there we go, <code class="language-plaintext highlighter-rouge">itertools.zip_longest()</code> saved Sarah!</p>
 
 <p>Notice above that we probably don’t want to print “sarah is length None”. Sarah does have a length, Python just doesn’t know what it is in this situation. In these cases, we want to provide a value to the optional argument <em>fillvalue</em>, which defaults to None.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="n">zip_longest</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name_lengths</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="s">"Unknown"</span><span class="p">):</span>
 <span class="p">...</span>     <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s"> is length </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
 <span class="p">...</span> 
-<span class="n">nick</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">4</span>
-<span class="n">sam</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">ben</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">3</span>
-<span class="n">larry</span> <span class="ow">is</span> <span class="n">length</span> <span class="mi">5</span>
-<span class="n">sarah</span> <span class="ow">is</span> <span class="n">length</span> <span class="n">Unknown</span>
-</code></pre></div></div>
+<span class="c1"># nick is length 4
+# sam is length 3
+# ben is length 3
+# larry is length 5
+# sarah is length Unknown
+</span></code></pre></div></div>
 <p><code class="language-plaintext highlighter-rouge">itertools.zip_longest()</code> is roughly equivalent to:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">zip_longest</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">fillvalue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="c1"># zip_longest('ABCD', 'xy', fillvalue='-') --&gt; Ax By C- D-
