@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Pythonic looping"
+title:  "Yielding tuples: pythonic looping"
 date:   2021-02-13 10:25:00 -0500
 ---  
 

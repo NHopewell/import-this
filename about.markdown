@@ -4,9 +4,7 @@ title: About
 #permalink: /about/
 ---
 
-My name is Nick Hopewell. This is my personal blog about all things coding which I find interesting (and hope others do too). 
-At the time of starting this blog, I am a Python developer professionally and I have a serious interest in the Python ecosystem. 
-I doubt, however, I will end up only talking about Python stuff.
+My name is Nick and I love Python. This is my personal blog about all things coding and Python which I find interesting (and hope others do too). At the time of starting this blog, I am a Python developer professionally and I have a serious interest in the language and surrounding ecosystem.
 
 Python makes programming fun again. Don't belive me? Just type the snippet below into your repr. 
 
@@ -30,6 +28,8 @@ False
 
 Find out why this is the case by [clicking here](https://nhopewell.github.io/import-this/2021/02/11/the-is-operator.html)
 
-I have interest in getting involved with the Python community, so if you find this stuff interesting, please reach out to me. 
+I have interest in getting involved with the Python community and I'd love to hear about your interests and journey to Python and/or coding in general. So if you find this stuff interesting, or just want to chat, please reach out to me. 
 
 My personal website is here __________ .
+
+By the way, this blog was built with <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>.
