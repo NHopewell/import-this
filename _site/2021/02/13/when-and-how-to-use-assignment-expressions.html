@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.2.0" />
 <meta property="og:title" content="‘x walrus z’: when and why should you use assignment expressions?" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572. The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
-<meta property="og:description" content="Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572. The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
+<meta name="description" content="Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572 by . The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
+<meta property="og:description" content="Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572 by . The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
 <link rel="canonical" href="/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html" />
 <meta property="og:url" content="/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html" />
 <meta property="og:site_name" content="import-this" />
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="‘x walrus z’: when and why should you use assignment expressions?" />
 <script type="application/ld+json">
-{"url":"/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html","headline":"‘x walrus z’: when and why should you use assignment expressions?","datePublished":"2021-02-13T10:26:00-05:00","dateModified":"2021-02-13T10:26:00-05:00","description":"Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572. The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html","headline":"‘x walrus z’: when and why should you use assignment expressions?","datePublished":"2021-02-13T10:26:00-05:00","dateModified":"2021-02-13T10:26:00-05:00","description":"Assignment expressions, also known as the walrus operator (x := z) was a proposal in PEP 572 by . The expression above is pronounced “x walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
 <body><header class="site-header" role="banner">
@@ -47,7 +47,7 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Assignment expressions, also known as the walrus operator (<code class="language-plaintext highlighter-rouge">x := z</code>) was a proposal in PEP 572. The expression above is pronounced “<em>x walrus z</em>”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a <a href="https://en.wikipedia.org/wiki/Walrus#/media/File:Pacific_Walrus_-_Bull_(8247646168).jpg" target="_blank">walrus</a></p>
+    <p>Assignment expressions, also known as the walrus operator (<code class="language-plaintext highlighter-rouge">x := z</code>) was a proposal in <a href="https://www.python.org/dev/peps/pep-0572/" target="_blank">PEP 572</a> by . The expression above is pronounced “<em>x walrus z</em>”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a <a href="https://en.wikipedia.org/wiki/Walrus#/media/File:Pacific_Walrus_-_Bull_(8247646168).jpg" target="_blank">walrus</a></p>
 
 <p>At the time, the walrus operator was met with a lot of controversy. During the proposal of the walrus operator in PEP 572, some people argued that assignment expressions were bad and not Pythonic. These people really pushed back and claimed that <em>they</em> knew what was Pythonic and what was not. “Assignment expressions are NOT pythonic!” they exclaimed loudly.</p>
 
@@ -56,6 +56,64 @@
 <p>But by then the oppinions of the contributing Python developers had added a lot of stress and difficulty to his life. He knew this was not the first time he had faced such opposition, and certaintly not the last time either. He decided it was time to let others handle the job. Guido promptly stepped down as Pythons BDFL the very next morning.</p>
 
 <p>This makes the walrus operator one of the most interesting and important PEP proposals in Pythons history. So let’s look into assignment expressions and make our own conclusion: was Guido right? Or was his opposition right? Is the walrus operator any good?</p>
+
+<p>As previously stated, the walrus operator allows the developer to assign values to variables in places where assignment were previously not allowed. The most common being within an <code class="language-plaintext highlighter-rouge">if</code> statement. Let’s look at some common patterns and use cases which could benefit from the walrus operator. The first common pattern involves any circumstance we need to read from a variable, check if its value is non-zero, and then use that value. Let’s pretend we work at a burrito shop and we are serving customers. First, let’s initialize the current stock of our different burritos:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">burrito_stock</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'beef'</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s">'chicken'</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s">'black_bean'</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s">'veggie'</span><span class="p">:</span> <span class="mi">27</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Let’s say a customer comes in and wants to buy a beef burrito. First, we need to check if we have a beef burrito to sell, and if we do, we can check out her/his order. We could do this by getting count of our current stock of beef burritos and then checking for a non-zero value with an <code class="language-plaintext highlighter-rouge">if</code> statement:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+    <span class="p">...</span>
+<span class="k">def</span> <span class="nf">out_of_stock</span><span class="p">():</span>
+    <span class="p">...</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'beef'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">count</span><span class="p">:</span>
+    <span class="n">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">out_of_stock</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p>We can see this code may be misleading because it’s easy to assume that the count variable is accessed in both the <code class="language-plaintext highlighter-rouge">if</code> and <code class="language-plaintext highlighter-rouge">else</code> branches. Because count is declared at the top, but is only accessed in the <code class="language-plaintext highlighter-rouge">if</code> branch, we might mistake it for being more important than it actually is.</p>
+
+<p>Assignment expressions make this exact scenario cleaner. Here is the same example with the walrus operator:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">count</span> <span class="p">:</span><span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'beef'</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="n">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">out_of_stock</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p>Now it becomes very clear where the count variable is being used. It is more obvious at a glance that count is relevant to the <code class="language-plaintext highlighter-rouge">if</code> branch. This two step process of assigning and then evaluating is the core concept behind the walrus operator.</p>
+
+<p>If we continue with this scenario, but instead of simply doing a non-zero check, we let the customer order multiple beef burritos, say 3, we now need to do a comparison inside the <code class="language-plaintext highlighter-rouge">if</code> statement. Without the walrus operator, that would look like this:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">size_order</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'beef'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="n">size_order</span><span class="p">:</span>
+    <span class="n">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">out_of_stock</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p>This still presents the same problem of over emphasizing the count variable. We can clean this up again by making it clear where count is important with the walrus operator:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">size_order</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">:</span><span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'beef'</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="n">size_order</span><span class="p">:</span>
+    <span class="n">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">out_of_stock</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p>It is important to note that when our assignment expression is a subexpression of a larger expression, like above, we need to wrap it in parentheses.</p>
+
+<p>One caveat, mentioned by Python core developer Raymond Hettinger in the docs <a href="https://docs.python.org/3/whatsnew/3.8.html" target="_blank">‘What’s New in Python 3.8’</a>, is that we should:</p>
+<blockquote>
+  <p>Try to limit use of the walrus operator to clean cases that reduce complexity and improve readability.</p>
+</blockquote>
+
+<p>So don’t go wild with the walrus. Be sensible. Be Pythonic.</p>
 
   </div><a class="u-url" href="/import-this/2021/02/13/when-and-how-to-use-assignment-expressions.html" hidden></a>
 </article>
