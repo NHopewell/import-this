@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "itertools.zip_longest() saves lives"
-date:   2021-02-13 10:26:00 -0500
+date:   2021-02-14 10:26:00 -0500
 ---  
 We know how great ```zip()``` is for processing multiple iterators in parrallel. If I have a list of names and another list of the
 lengths of those names, I can iterate over both lists at once like so:
