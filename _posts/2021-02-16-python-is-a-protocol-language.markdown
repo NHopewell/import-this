@@ -40,7 +40,6 @@ This is an example of using a builtin function ```print``` to interact with our 
 'first' in my_talking_dict
 # Not this time pal.
 # False
-
 ```
 We know 'first' is in the dictionary, we set it just a moment ago. But according to our talking dict, it's not in there. This is because we overloaded a special method of our ```TalkingDictionary``` to return False all the time no matter what the user asks for. In fact, we have overloaded numerous special methods whic dictate the behaviour of the protocol. Let's try asking for a key that is not in the dictionary. 
 ```python
@@ -64,7 +63,6 @@ Finally, let's use on more builtin function and ask for the length of our dictio
 len(my_talking_dict)
 # Here is my length:
 # 2
-
 ```
 So we can see that each of our interactions with this ```TalkingDictionary``` class has some associated behaviour which is predetermined by a protocol (the code which links our actions to whatever Python outputs back to us). It turns out that all of these interactions, getting a key, setting a key, asking if a key is in the dictionary, printing the instance, asking for its length, ect., are calling methods under the namespace of the ```TalkingDictionary``` which explain why our instance behaves as it does. I defined all of these methods by inheriting from ```dict```, the basic Python dictionary, and overloading the behaviour myself.   
 
