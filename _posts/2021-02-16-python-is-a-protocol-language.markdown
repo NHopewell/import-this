@@ -38,7 +38,7 @@ print(my_talking_dict)
 This is an example of using a builtin function ```print``` to interact with our new object. This is another example of that top-level protocol I was talking about. Let's look at another protocol. Let's ask if the key 'first' is contained in the dictionary.
 ```python
 'first' in my_talking_dict
-# I heard dictionaries have constant time access. Not this time pal.
+# Not this time pal.
 # False
 
 ```
@@ -93,14 +93,14 @@ class TalkingDictionary(dict):
         return super().__getitem__(key)
 
     def __contains__(self, item):
-        print("I heard dictionaries have constant time access. Not this time pal.")
+        print("Not this time pal.")
         return False
 
     def __len__(self):
         print("Here is my length:")
         return super().__len__()
 ```
-Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set 'first' to 'Nick' called ```__setitem__()``` which printed a message and then called the same method from its parent, ```dict```, to actually set the key, value pair. When we asked for the value of 'first', our instance called ```__getitem__()``` which did a similar thing. ```print()``` called ```__repr__()```. Using the ```in``` operator called ```__contains__()```. Attempting to access a key which did not exist, 'middle', called ```__getitem()__``` first, which printed out the message "Let me find that for you..." and then when it discovered that middle was not a key in our dictionary, it called ```__missing__()``` which raised a ``KeyError```. When we called our instance by adding ```()``` to the end, it called ```__call__()```. And finally, when we called ```len()``` on our instance, it called the method ```__len__()```.  
+Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set 'first' to 'Nick' called ```__setitem__()``` which printed a message and then called the same method from its parent, ```dict```, to actually set the key, value pair. When we asked for the value of 'first', our instance called ```__getitem__()``` which did a similar thing. ```print()``` called ```__repr__()```. Using the ```in``` operator called ```__contains__()```. Attempting to access a key which did not exist, 'middle', called ```__getitem()__``` first, which printed out the message "Let me find that for you..." and then when it discovered that middle was not a key in our dictionary, it called ```__missing__()``` which raised a ```KeyError```. When we called our instance by adding ```()``` to the end, it called ```__call__()```. And finally, when we called ```len()``` on our instance, it called the method ```__len__()```.  
 
 If this is completely new to you, you might wonder why these special methods have leading and trailing double underscores. In Python, these special methods are called "dunders" (double underscore) and are methods whose novel implementation is strictly reserved for the core Python developers, but are supposed to be overloadded by the user. In other words, never implement your own dunder method, but feel free to alter their behaviour in the classes you create if neccessary.   
 
