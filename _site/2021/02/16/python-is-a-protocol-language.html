@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Python is a protocol-based language | import-this</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Python is a protocol-based language" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language." />
+<meta property="og:description" content="In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language." />
+<link rel="canonical" href="/import-this/2021/02/16/python-is-a-protocol-language.html" />
+<meta property="og:url" content="/import-this/2021/02/16/python-is-a-protocol-language.html" />
+<meta property="og:site_name" content="import-this" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-16T10:26:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Python is a protocol-based language" />
+<script type="application/ld+json">
+{"url":"/import-this/2021/02/16/python-is-a-protocol-language.html","headline":"Python is a protocol-based language","datePublished":"2021-02-16T10:26:00-05:00","dateModified":"2021-02-16T10:26:00-05:00","description":"In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language.","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/16/python-is-a-protocol-language.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/import-this/">import-this</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/import-this/about.html">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python is a protocol-based language</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2021-02-16T10:26:00-05:00" itemprop="datePublished">Feb 16, 2021
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language.</p>
+
+<p>When creating, extending, and using classes and objects in Python, there is always some top-level protocol which calls some underlying code to handle how the protocol behaves. When new Python developers start coding, they are constantly interacting with these protocols even without realizing at first.</p>
+
+<p>What I mean by “top-level protocol” is that we write some code to interact with objects we are interested in working with. Perhaps we call an object which runs some code, maybe we initialize a new variable which points to a Python object, maybe we ask the length of an object with the builtin <code class="language-plaintext highlighter-rouge">len()</code>, or add two objects with the builtin <code class="language-plaintext highlighter-rouge">add()</code>, maybe we want to index into an item with square brackets [], etc. There is some top-level behaviour we perform in our scripts that calls some underyling code which dictates the behaviour of our actions.</p>
+
+<p>To hide the internal behaviour at first, imagine I created a new class called a <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> which spike back to me every time I interacted with it in some way. Imagine this new class is stored in a file called <code class="language-plaintext highlighter-rouge">talking_dict.py</code>. Let’s import it, start writing some of these top-level interactions, and see how the protocol behaves. The commented out parts of the code snippets below are the output.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">talking_dict</span> <span class="kn">import</span> <span class="n">TalkingDictionary</span>
+
+<span class="n">my_talking_dict</span> <span class="o">=</span> <span class="n">TalkingDictionary</span><span class="p">()</span>
+
+<span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Nick'</span>
+<span class="c1"># Setting key 'first' to value 'Nick'
+</span>
+<span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'last'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Hopewell'</span>
+<span class="c1"># Setting key 'last' to value 'Hopewell'
+</span></code></pre></div></div>
+<p>We can see above that we initialized a new <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> instance and set a few keys (first and last). Each time we did that, we had the dictionary talk back to us letting us know that it was setting the keys to the values we provided.</p>
+
+<p>Let’s try some other interactions, what if we ask for the value of a key just to be sure it was set correctly:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span>
+<span class="c1"># Let me find that for you...
+# 'Nick'
+</span></code></pre></div></div>
+<p>The dictionary talked back to us again and let us know what the value of the first key was when it found it. Let’s continue. What if we wanted to print the dictonary:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">my_talking_dict</span><span class="p">)</span>
+<span class="c1"># Here are my key,value pairs:
+# {'first': 'Nick', 'last': 'Hopewell'}
+</span></code></pre></div></div>
+<p>This is an example of using a builtin function <code class="language-plaintext highlighter-rouge">print</code> to interact with our new object. This is another example of that top-level protocol I was talking about. Let’s look at another protocol. Let’s ask if the key ‘first’ is contained in the dictionary.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'first'</span> <span class="ow">in</span> <span class="n">my_talking_dict</span>
+<span class="c1"># I heard dictionaries have constant time access. Not this time pal.
+# False
+</span>
+</code></pre></div></div>
+<p>We know ‘first’ is in the dictionary, we set it just a moment ago. But according to our talking dict, it’s not in there. This is because we overloaded a special method of our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> to return False all the time no matter what the user asks for. In fact, we have overloaded numerous special methods whic dictate the behaviour of the protocol. Let’s try asking for a key that is not in the dictionary.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'middle'</span><span class="p">]</span>
+<span class="c1"># Let me find that for you...
+#   Traceback (most recent call last):
+#       ...
+# KeyError: "You're looking for 'middle' but it ain't here."
+</span></code></pre></div></div>
+<p>When we ask for the value of the key ‘middle’, which is not contained in our dictionary, you can tell that at some point it is calling the same code which was called when we accessed the key ‘first’ because it prints out the message “Let me find that for you…”. And just after a <code class="language-plaintext highlighter-rouge">KeyError</code> is raised with the message “You’re looking for ‘middle’ but it ain’t here.” So at least 2 distinct peices of code were called in this interaction even though we only asked for one key.</p>
+
+<p>What is we tried to call our talking dictionary as if it were a function.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">()</span>
+<span class="c1"># I have been called! Too bad calling me does nothing interesting.
+</span></code></pre></div></div>
+<p>Notice that simply adding <code class="language-plaintext highlighter-rouge">()</code> to the end of our instance is itself one of these top-level protcols between the user and the underlying class. These ending braces are calling code behind the scenes.</p>
+
+<p>Finally, let’s use on more builtin function and ask for the length of our dictionary.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">my_talking_dict</span><span class="p">)</span>
+<span class="c1"># Here is my length:
+# 2
+</span>
+</code></pre></div></div>
+<p>So we can see that each of our interactions with this <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class has some associated behaviour which is predetermined by a protocol (the code which links our actions to whatever Python outputs back to us). It turns out that all of these interactions, getting a key, setting a key, asking if a key is in the dictionary, printing the instance, asking for its length, ect., are calling methods under the namespace of the <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> which explain why our instance behaves as it does. I defined all of these methods by inheriting from <code class="language-plaintext highlighter-rouge">dict</code>, the basic Python dictionary, and overloading the behaviour myself.</p>
+
+<p>Let’s look at our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TalkingDictionary</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Here are my key,value pairs:"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"I have been called! Too bad calling me does nothing interesting."</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__missing__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"You're looking for '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">' but it ain't here."</span>
+        <span class="k">raise</span> <span class="nb">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Setting key '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">' to value '</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s">'"</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Let me find that for you..."</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"I heard dictionaries have constant time access. Not this time pal."</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Here is my length:"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__len__</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set ‘first’ to ‘Nick’ called <code class="language-plaintext highlighter-rouge">__setitem__()</code> which printed a message and then called the same method from its parent, <code class="language-plaintext highlighter-rouge">dict</code>, to actually set the key, value pair. When we asked for the value of ‘first’, our instance called <code class="language-plaintext highlighter-rouge">__getitem__()</code> which did a similar thing. <code class="language-plaintext highlighter-rouge">print()</code> called <code class="language-plaintext highlighter-rouge">__repr__()</code>. Using the <code class="language-plaintext highlighter-rouge">in</code> operator called <code class="language-plaintext highlighter-rouge">__contains__()</code>. Attempting to access a key which did not exist, ‘middle’, called <code class="language-plaintext highlighter-rouge">__getitem()__</code> first, which printed out the message “Let me find that for you…” and then when it discovered that middle was not a key in our dictionary, it called <code class="language-plaintext highlighter-rouge">__missing__()</code> which raised a <code class="language-plaintext highlighter-rouge">KeyError</code><code class="language-plaintext highlighter-rouge">. When we called our instance by adding </code><code class="language-plaintext highlighter-rouge">()</code><code class="language-plaintext highlighter-rouge"> to the end, it called </code><code class="language-plaintext highlighter-rouge">__call__()</code><code class="language-plaintext highlighter-rouge">. And finally, when we called </code><code class="language-plaintext highlighter-rouge">len()</code><code class="language-plaintext highlighter-rouge"> on our instance, it called the method </code><code class="language-plaintext highlighter-rouge">__len__()</code>`.</p>
+
+<p>If this is completely new to you, you might wonder why these special methods have leading and trailing double underscores. In Python, these special methods are called “dunders” (double underscore) and are methods whose novel implementation is strictly reserved for the core Python developers, but are supposed to be overloadded by the user. In other words, never implement your own dunder method, but feel free to alter their behaviour in the classes you create if neccessary.</p>
+
+<p>These methods and protocols, and many more, are explained in detail in the <a target="_blank" href="https://docs.python.org/3/reference/datamodel.html">Python Data Model docs.</a></p>
+
+<p>I hope this helps new Python developers arrive at a clear mental model for this protocol-based nature of Python.</p>
+
+  </div><a class="u-url" href="/import-this/2021/02/16/python-is-a-protocol-language.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/import-this/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">import-this</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">import-this</li><li><a class="u-email" href="mailto:nicholashopewell@gmail.com">nicholashopewell@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/NHopewell"><svg class="svg-icon"><use xlink:href="/import-this/assets/minima-social-icons.svg#github"></use></svg> <span class="username">NHopewell</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>I talk about Python. 🐍 </p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
