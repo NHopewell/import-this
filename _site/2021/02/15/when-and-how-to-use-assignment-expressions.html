@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.2.0" />
 <meta property="og:title" content="‘y walrus z’: when and why should you use assignment expressions?" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
-<meta property="og:description" content="Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
+<meta name="description" content="Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not. By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
+<meta property="og:description" content="Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not. By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus" />
 <link rel="canonical" href="/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html" />
 <meta property="og:url" content="/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html" />
 <meta property="og:site_name" content="import-this" />
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="‘y walrus z’: when and why should you use assignment expressions?" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html"},"url":"/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html","headline":"‘y walrus z’: when and why should you use assignment expressions?","description":"Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus","dateModified":"2021-02-15T10:26:00-05:00","datePublished":"2021-02-15T10:26:00-05:00","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html","headline":"‘y walrus z’: when and why should you use assignment expressions?","datePublished":"2021-02-15T10:26:00-05:00","dateModified":"2021-02-15T10:26:00-05:00","description":"Assignment expressions, also known as the walrus operator (y := z) was a proposal in PEP 572 by . The expression above is pronounced “y walrus z”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not. By the way, it’s called the walrus operator because it looks like the eyes and tusks of a walrus","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
 <body><header class="site-header" role="banner">
@@ -47,26 +47,17 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Assignment expressions, also known as the walrus operator (<code class="language-plaintext highlighter-rouge">y := z</code>) was a proposal in <a href="https://www.python.org/dev/peps/pep-0572/" target="_blank">PEP 572</a> by . The expression above is pronounced “<em>y walrus z</em>”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not (we will get into this in detail later). By the way, it’s called the walrus operator because it looks like the eyes and tusks of a <a href="https://en.wikipedia.org/wiki/Walrus#/media/File:Pacific_Walrus_-_Bull_(8247646168).jpg" target="_blank">walrus</a></p>
+    <p>Assignment expressions, also known as the walrus operator (<code class="language-plaintext highlighter-rouge">y := z</code>) was a proposal in <a href="https://www.python.org/dev/peps/pep-0572/" target="_blank">PEP 572</a> by . The expression above is pronounced “<em>y walrus z</em>”, and it allows you to assign values to variables as part of larger expressions where, before Python 3.8, you previously could not. By the way, it’s called the walrus operator because it looks like the eyes and tusks of a <a href="https://en.wikipedia.org/wiki/Walrus#/media/File:Pacific_Walrus_-_Bull_(8247646168).jpg" target="_blank">walrus</a></p>
 
 <p>At the time, the walrus operator was met with a lot of controversy. During the proposal of the walrus operator in PEP 572, some people argued that assignment expressions were bad and not Pythonic. These people really pushed back and claimed that <em>they</em> knew what was Pythonic and what was not. “Assignment expressions are NOT pythonic!” they exclaimed loudly.</p>
 
 <p>When PEP 572 was proposed, Guido Van Rossum was the BDFL (Benevolent Dictator For Life) of Python. And he disagreed with them. He believed that the walrus operator was a good addition and that it was, in fact, very Pythonic. He ought to know… He created the language after all. Guido went ahead and approved PEP 572, including the walrus operator.</p>
 
-<p>But by then the oppinions of the contributing Python developers had added a lot of stress and difficulty to his life. He knew this was not the first time he had faced such opposition, and certaintly not the last time either. He decided it was time to let others handle the job. Guido promptly stepped down as Pythons BDFL the very next morning.</p>
+<p>But by then the oppinions of the contributing Python developers had added a lot of stress and difficulty to Guidos life. He knew this was not the first time he had faced such opposition, and certaintly not the last time either. He decided it was time to let others handle the job. Guido promptly stepped down as BDFL the very next morning.</p>
 
 <p>This makes the walrus operator one of the most interesting and important PEP proposals in Pythons history. So let’s look into assignment expressions and make our own conclusion: was Guido right? Or was his opposition right? Is the walrus operator any good?</p>
 
-<p>As previously stated, the walrus operator allows the developer to assign values to variables in places where assignment were previously not allowed. The most common being within an <code class="language-plaintext highlighter-rouge">if</code> statement. Let’s look at some common patterns and use cases which could benefit from the walrus operator. By common patterns I mean scenarios which frequently come up during development.</p>
-
-<p>These patterns are as follows:</p>
-
-<ul>
-  <li><strong>pattern 1:</strong> reading from a variable, checking its value is non-zero, and using that value in some way.</li>
-  <li><strong>pattern 2:</strong> assigning a value to a variable based on some condition, and then referencing that variable in a function call right after.</li>
-  <li><strong>pattern 3:</strong> writing nested multiple <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">elif</code>, and <code class="language-plaintext highlighter-rouge">else</code> statements in place of Pythons non-existent switch/case statement.</li>
-  <li><strong>pattern 4:</strong> constructing an ugly “<em>loop-and-a-half</em>” in place of Pythons non-existent do-while loop.</li>
-</ul>
+<p>As previously stated, the walrus operator allows the developer to assign values to variables in places where assignment was previously not allowed. The most common being within an <code class="language-plaintext highlighter-rouge">if</code> statement. Let’s look at some common patterns and use cases which could benefit from the walrus operator. By common patterns I mean scenarios which frequently come up during development.</p>
 
 <h3 id="pattern--1">Pattern # 1</h3>
 <p>The first common pattern involves any circumstance we need to read from a variable, check if its value is non-zero, and then use that value. Let’s pretend we work at a burrito shop and we are serving customers. First, let’s initialize the current stock of our different burritos:</p>
@@ -78,7 +69,7 @@
     <span class="s">'tofu'</span><span class="p">:</span> <span class="mi">8</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Let’s say a customer comes in and wants to buy a beef burrito. First, we need to check if we have a beef burrito to sell, and if we do, we can check out her/his order. We could do this by getting count of our current stock of beef burritos and then checking for a non-zero value with an <code class="language-plaintext highlighter-rouge">if</code> statement:</p>
+<p>Let’s say a customer comes in and wants to buy a beef burrito. First, we need to check if we have a beef burrito to sell, and if we do, we can make it up for her/him to eat. We could do this by getting count of our current stock of beef burritos and then checking for a non-zero value with an <code class="language-plaintext highlighter-rouge">if</code> statement:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_beef_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
     <span class="p">...</span>
 <span class="k">def</span> <span class="nf">out_of_stock</span><span class="p">():</span>
@@ -112,16 +103,16 @@
     <span class="n">out_of_stock</span><span class="p">()</span>
 
 </code></pre></div></div>
-<p>This still presents the same problem of over emphasizing the count variable. We can clean this up again by making it clear where count is important with the walrus operator:</p>
+<p>This presents the same problem of over emphasizing the count variable. We can clean this up again by making it clear where count is important with the walrus operator:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">:</span><span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'veggie'</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
     <span class="n">veggie_burrito</span> <span class="o">=</span> <span class="n">make_veggie_burrito</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">out_of_stock</span><span class="p">()</span>
 </code></pre></div></div>
-<p>It is important to note that when our assignment expression is a subexpression of a larger expression, like above, we need to wrap it in parentheses. In any case where we do not need the parentheses, they should be dropped entirely. This goes for any subexpression in Python, not only ones which contain the walrus operator.</p>
+<p>It is important to note that when our assignment expression is a subexpression of a larger expression, like above, we need to wrap it in parentheses. In any case where we do not need the parentheses they should be dropped entirely. This goes for any subexpression in Python, not only ones which contain the walrus operator.</p>
 
 <h3 id="pattern--2">Pattern # 2</h3>
-<p>The second common pattern, which is similar to the first pattern, involves anytime we want to assign a value to a variable depending on some condition, and then use that variable in a function call right after. Let’s continue with the veggie burrito customer. Let’s say in order to fulfill the order I need the 2 portions of veggies (like before) to be sliced up, and if we don’t have enough to slice, I want to raise an OutOfVeggies exception. Here is a way to implement this scenario without the walrus operator:</p>
+<p>The second common pattern, which is similar to the first pattern, involves anytime we want to assign a value to a variable depending on some condition, and then use that variable in a function call right after. Let’s continue with the veggie burrito customer. Let’s say in order to fulfill the order I need the 2 portions of veggies (like before) to be sliced up, and if we don’t have enough veggies to slice, I want to raise an OutOfVeggies exception. Here is a way to implement this scenario without the walrus operator:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_veggie_burrito</span><span class="p">(</span><span class="n">slices</span><span class="p">):</span>
     <span class="p">...</span>
 
@@ -154,12 +145,12 @@
     <span class="k">raise</span> <span class="n">OutOfVeggies</span><span class="p">:</span>
         <span class="n">out_of_stock</span><span class="p">()</span>
 </code></pre></div></div>
-<p>Now it is much more clear that slices is relevant to all the logic below, and count is only important to the <code class="language-plaintext highlighter-rouge">if</code> statement. At a glance, we understand the scope of importance and any room for ambiguity has gone away.</p>
+<p>Now it is much more clear that slices is relevant to all the logic below the line where it is declared, and count is only important to the <code class="language-plaintext highlighter-rouge">if</code> statement. At a glance, we understand the scope of importance of these two variables and any room for ambiguity has gone away.</p>
 
 <h3 id="pattern--3">Pattern # 3</h3>
 <p>The third common pattern involves scenarios where a switch/case statement might be a programmers first choice when tackling some sub problem they face, but she/he cant’ use one because Python does not support switches (as of yet). Typically, Python developers handle this with nesting multiple <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">elif</code>, and <code class="language-plaintext highlighter-rouge">else</code> statements.</p>
 
-<p>Let’s pretend that we want to automate buritto making for our non-eat eating customers. We can see that 3 of our options in our stock do not contain meat. These are veggies, black beans, and tofu burritos. Let’s say that we know veggie is the most popular, then black bean, then tofu. And each of these options requires a different amount of each ingredient to make. Our system might look like this:</p>
+<p>Let’s pretend that we want to automate buritto making for our non-meat eating customers. We can see that 3 of our options in our stock do not contain meat. These are veggie, black bean, and tofu burritos. Let’s say that we know veggie is the most popular, then black bean, then tofu. And each of these options requires a different amount of each ingredient to make. Our system might look like this:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">count</span> <span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'veggie'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
     <span class="n">slices</span> <span class="o">=</span> <span class="n">slice_veggies</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
@@ -175,7 +166,7 @@
         <span class="k">else</span><span class="p">:</span>
            <span class="n">burrito</span> <span class="o">=</span> <span class="s">"No burrito for you, bosss."</span>
 </code></pre></div></div>
-<p>This type of code is common in Python because of the lack of a switch statement. But when we clean this up with the walrus operator, it almost feels like we are suddenly using a switch statement:</p>
+<p>This type of nested code is quite common in Python because of the lack of a switch statement. But when we clean this up with the walrus operator, it almost feels like we are suddenly using a switch statement:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="p">:</span><span class="o">=</span> <span class="n">burrito_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'veggie'</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
     <span class="n">slices</span> <span class="o">=</span> <span class="n">slice_veggies</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
     <span class="n">burrito</span> <span class="o">=</span> <span class="n">make_veggie_burrito</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span>
@@ -188,10 +179,10 @@
 </code></pre></div></div>
 <p>We have stripped out all the nesting statements and it is obvious now what is happening in this bit of code. In situations where ugly nested branching logic is showing up in your code, it is probably worth your time to consider reimplementing the logic using assignment expressions.</p>
 
-<p>That being said, it was recently announced that <a target="_blank" href="https://github.com/gvanrossum/patma">switch statements will be coming to Python soon</a>. This construct has been approved as of <a href="https://www.python.org/dev/peps/pep-0634/" target="_blank">PEP 634</a>. It seems the Python switch will be much more powerful than switch implementations in other languages like C#. If you’re reading in the future, maybe this has already been released. I imagine these proper switch statements will be the preferred solution to this common pattern we just discussed.</p>
+<p>That being said, it was recently announced that <a target="_blank" href="https://github.com/gvanrossum/patma">switch statements will be coming to Python soon</a>. This proposal has been approved as of <a href="https://www.python.org/dev/peps/pep-0634/" target="_blank">PEP 634</a>. It seems the Python switch will be much more powerful than switch implementations in other languages like C#. If you’re reading in the future, maybe this has already been released. I imagine these proper switch statements will be the preferred solution to this common pattern we just discussed.</p>
 
-<h3 id="pattern-4">Pattern 4</h3>
-<p>The fourth and final pattern involves any scenario a Python developer writes a “loop and a half” in their code to make up for the lack of a do-while loop in the language.</p>
+<h3 id="pattern--4">Pattern # 4</h3>
+<p>The fourth and final pattern involves any scenario a Python developer writes a “<em>loop-and-a-half</em>” in their code to make up for the lack of a do-while loop in the language.</p>
 
 <p>Let’s say I want to make burritos until I am out of ingredients:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_ingredients</span><span class="p">():</span>
@@ -208,19 +199,19 @@
         <span class="n">burritos</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">burrito_batch</span><span class="p">)</span>
     <span class="n">ingredients</span> <span class="o">=</span> <span class="n">get_ingredients</span><span class="p">()</span>          <span class="c1"># call get_ingredients() again
 </span></code></pre></div></div>
-<p>The obvious repetition above involves the two calls to <code class="language-plaintext highlighter-rouge">get_ingredients()</code>. We call it once before the while loop and then again at the end of the while loop to restock the ingredients.</p>
+<p>The obvious repetition above involves the two calls to <code class="language-plaintext highlighter-rouge">get_ingredients()</code>. We call it once before the while loop and then again at the end of the while loop to either restock the ingredients or break out of the loop.</p>
 
-<p>One common way Python developers try to avoid this repetition is to use a “<em>loop-and-a-half</em>”. This strategy will get rid of the repetition but will make the while loop a simple infinite loop controlled by a <code class="language-plaintext highlighter-rouge">break</code> statement. Something we try to avoid:</p>
+<p>One common way Python developers try to avoid this repetition is to use a “<em>loop-and-a-half</em>”. This strategy will get rid of the repetition but will make the while loop a simple infinite loop controlled by a <code class="language-plaintext highlighter-rouge">break</code> statement. Something we try to avoid. It is called a loop and a half because we execute half the code in the loop before exiting, instead of checking a proper condition first, thus never starting the terminal iteration to begin with.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">burritos</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>                                   <span class="c1"># loop
 </span>    <span class="n">ingredients</span> <span class="o">=</span> <span class="n">get_ingredients</span><span class="p">()</span> 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ingredients</span><span class="p">:</span>                       <span class="c1"># and a half
-</span>        <span class="k">break</span>
+</span>        <span class="k">break</span>                                  
     <span class="k">for</span> <span class="n">base</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">burrito_batch</span> <span class="o">=</span> <span class="n">make_burrito_batch</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
         <span class="n">burritos</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">burrito_batch</span><span class="p">)</span>
 </code></pre></div></div>
-<p>We can avoid this awkward inifite loop with a break strategy with the walrus operator. Because the walrus operator allows us to assign a value in a conditional check, we do not need to initize ingredients before the loop, calling <code class="language-plaintext highlighter-rouge">get_ingredients()</code> twice. Instead we can reassign the ingredients variable and check it at each pass of the loop:</p>
+<p>We can avoid this awkward inifite loop with a break strategy with the walrus operator. Because the walrus operator allows us to assign a value in a conditional check, we do not need to initize ingredients before the loop, calling <code class="language-plaintext highlighter-rouge">get_ingredients()</code> twice. Nor do we need to implement a forever loop with a break statement. Instead we can reassign the ingredients variable and check it at each pass of the loop:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">burritos</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">while</span> <span class="n">ingredients</span> <span class="p">:</span><span class="o">=</span> <span class="n">get_ingredients</span><span class="p">():</span>                                   
     <span class="k">for</span> <span class="n">base</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
@@ -233,7 +224,7 @@
 
 <h3 id="using-the-walrus-operator-in-comprehensions-to-keep-code-dry">Using the walrus operator in comprehensions to keep code DRY</h3>
 
-<p>We all know what DRY means: Don’t Repeat Yourself. The idea is that if we are copy and pasting code, we probably can clean up our code in some way to avoid this. Let’s say I am selling flowers at a flower shop and customers are buying flowers in batches of 8. To sell the flowers in these batches, I first want to see how many batches of 6 I can support from my total flow stock for each flower ordered:</p>
+<p>We all know what DRY means: Don’t Repeat Yourself. The idea is that if we are copy and pasting code, we probably should clean it up. Let’s say I am selling flowers at a flower shop and customers are buying flowers in batches of 8. To sell the flowers in these batches, I first want to see how many batches of 8 I can support from my total stock for each flower ordered:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">flower_stock</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'rose'</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
     <span class="s">'tulip'</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
@@ -264,7 +255,7 @@
     <span class="k">if</span> <span class="n">get_flower_batches</span><span class="p">(</span><span class="n">flower_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">flower</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>This code really is not better because the call to <code class="language-plaintext highlighter-rouge">get_flower_batches()</code> happens twice and it takes away from the readability of the code overall. This code would also not act as expected if we changed the actual parameters input to one of the two function calls but not the other.</p>
+<p>This code really is not much better because the call to <code class="language-plaintext highlighter-rouge">get_flower_batches()</code> happens twice and it takes away from the readability of the code overall. This code would also not act as expected if we changed the actual parameters input to one of the two function calls but not the other.</p>
 
 <p>The walrus operator can solve this problem:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">total_batches</span> <span class="o">=</span> <span class="p">{</span>
@@ -272,16 +263,19 @@
     <span class="k">if</span> <span class="p">(</span><span class="n">batches</span> <span class="p">:</span><span class="o">=</span> <span class="n">get_flower_batches</span><span class="p">(</span><span class="n">flower_stock</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">flower</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>Now our code looks really DRY. But is it better? To a long time Python developer the answer is probably yes. To someone who is new to Python the answer might be no. This might look too cryptic to someone who is not used to this syntax.</p>
+<p>Now our code looks really DRY. But is it better? To a long time Python developer the answer is probably yes. To someone who is newer to Python the answer might be no. This might look too cryptic to someone who is not used to this syntax.</p>
 
-<p>Calling back to the original discussion about who was right about assignment expressions being a good addition, Guido or the critics, let’s think about it. We saw that there a lot of instances where the walrus operator does improve readability. We could tell in our branching examples that it was clear how to mentally scope some of our variables at a glance when we incorporated the walrus operator. And in our dictionary comprehension example, we can see that the walrus operator helped us keep our code DRY bur some less experienced Python devs might find the resulting code a bit cryptic.</p>
+<hr />
+<p><br /></p>
 
-<p>For me personally, I think Gudio was right. It is a good additon <em>when used correctly</em>.  One caveat, mentioned by Python core developer Raymond Hettinger in the docs <a href="https://docs.python.org/3/whatsnew/3.8.html" target="_blank">‘What’s New in Python 3.8’</a>, is that we should:</p>
+<p>Calling back to the original question: who was right about assignment expressions being a good addition, Guido or the critics? Let’s make a conclusion. We saw that there a number of instances where the walrus operator does improve readability. We could tell in our branching examples that it was clearer how to mentally scope some of our variables at a glance when we incorporated the walrus operator. And in our dictionary comprehension example, we can see that the walrus operator helped us keep our code DRY. On the other hand, some devs might find code which makes use of assignment expressions a bit too cryptic. They might say that such code is not what ‘Pythonic’ code is supposed to read like.</p>
+
+<p>For me personally, I think Gudio was right. It is a good additon <em>when used correctly</em>.  One caveat, mentioned by Python core developer <a target="_blank" href="https://twitter.com/raymondh?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Raymond Hettinger</a> in the docs <a href="https://docs.python.org/3/whatsnew/3.8.html" target="_blank">‘What’s New in Python 3.8’</a>, is that we should:</p>
 <blockquote>
   <p>Try to limit use of the walrus operator to clean cases that reduce complexity and improve readability.</p>
 </blockquote>
 
-<p>So there are places we ought to make the most of the walrus, but don’t go wild with it either. Be sensible. Be Pythonic.</p>
+<p>So in conclusion: there are places we ought to make the most of the walrus, but don’t go wild with it either. Be sensible. Be Pythonic.</p>
 
   </div><a class="u-url" href="/import-this/2021/02/15/when-and-how-to-use-assignment-expressions.html" hidden></a>
 </article>
