@@ -6,25 +6,11 @@ title: About
 
 My name is Nick and I love Python. This is my personal blog about all things coding and Python which I find interesting (and hope others do too). At the time of starting this blog, I am a Python developer professionally and I have a serious interest in the language and surrounding ecosystem.
 
-Python makes programming fun again. Don't belive me? Just type the snippet below into your repr. 
-
-```python3
-import antigravity
-```
+Python makes programming fun again. Don't belive me? Just type ```import antigravity``` into your repr. 
 
 Some of my posts will be practical and immediately useful (such as why ```__super__()``` doesn't do what you think it does), others will try to understand and answer some of the more fun quirks such as why the code below evaluates to True given a value of 256, but False when given a value of 257.
 
-```python3
->>> x = 256
->>> y = 256
->>> x is y
-True
-
->>> x = 257
->>> y = 257
->>> x is y
-False
-```
+{% gist c14ef005ab1c427c77d8facda14ca709 %}
 
 Find out why this is the case by [clicking here](https://nhopewell.github.io/import-this/2021/02/11/the-is-operator.html)
 
