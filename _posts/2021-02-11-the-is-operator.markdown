@@ -5,41 +5,17 @@ date:   2021-02-11 10:25:00 -0500
 ---
 The Python code below evaluates to True given a value of 256, but False when given a value of 257. But why?
 
-```python
->>> x = 256
->>> y = 256
->>> x is y
-# True
-
->>> x = 257
->>> y = 257
->>> x is y
-# False
-```
+{% gist c14ef005ab1c427c77d8facda14ca709 %}
 
 First, let's talk about what ```is``` actually...is. 
 
 Unlike ```==``` which compares *values* for equality, the ```is``` operator checks if both operands refer to the same object.  In other words, ```is``` checks if the identity of both operands match or not. You can check this yourself with ```id()```.
 
-```python
->>> x = 256
->>> id(x)
-# 4381006464
->>> y = 256
->>> id(y)
-# 4381006464
-```
+{% gist 54fdb77b19f2b4280c345408f07106d4 %}
 
 We can see that these variables x and y are pointing to the same object in memory (they both have the same ids). This still does not make a lot of sense. If we do the same with a value of 257 given to x and y, we see that their ids are not the same anymore.
 
-```python
->>> x = 257
->>> id(x)
-# 140476436035088
->>> y = 257
->>> id(y)
-# 140476436034992
-```
+{% gist 8a4649abe8b806c6d4959606d1faf0d9 %}
 So what's going on here? 
 
 The answer is that 256 is already an object when you launch python, while 257 is not. You can read this in the [documentation](https://docs.python.org/3/c-api/long.html). It states:
@@ -54,11 +30,7 @@ When we assign 257 to y right after assigning 257 to x, the interpreter does not
 
 But it gets even more interesting when we **initialize two variables with the same value on the same line**:
 
-```python
->>> x, y = 257, 257
->>> x is y
-# True
-```
+{% gist d860b6f09e005ed679735d40d38d705c %}
 
 Now, for some reason, ```x is y``` returns ```True``` when both are given a value of 257. Which was not the case when we assigned 257 to these variables on different lines. 
 

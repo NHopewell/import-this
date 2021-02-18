@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Python is a protocol-based language" />
 <script type="application/ld+json">
-{"url":"/import-this/2021/02/16/python-is-a-protocol-language.html","headline":"Python is a protocol-based language","datePublished":"2021-02-16T10:26:00-05:00","dateModified":"2021-02-16T10:26:00-05:00","description":"In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language.","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/16/python-is-a-protocol-language.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Python is a protocol-based language","dateModified":"2021-02-16T10:26:00-05:00","url":"/import-this/2021/02/16/python-is-a-protocol-language.html","datePublished":"2021-02-16T10:26:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/16/python-is-a-protocol-language.html"},"description":"In this post I am going to briefly explain a bit of a mental model which helped me think about Python programming when I was first learning the language.","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
 <body><header class="site-header" role="banner">
@@ -78,10 +78,9 @@
 </span></code></pre></div></div>
 <p>This is an example of using a builtin function <code class="language-plaintext highlighter-rouge">print</code> to interact with our new object. This is another example of that top-level protocol I was talking about. Let’s look at another protocol. Let’s ask if the key ‘first’ is contained in the dictionary.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'first'</span> <span class="ow">in</span> <span class="n">my_talking_dict</span>
-<span class="c1"># I heard dictionaries have constant time access. Not this time pal.
+<span class="c1"># Not this time pal.
 # False
-</span>
-</code></pre></div></div>
+</span></code></pre></div></div>
 <p>We know ‘first’ is in the dictionary, we set it just a moment ago. But according to our talking dict, it’s not in there. This is because we overloaded a special method of our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> to return False all the time no matter what the user asks for. In fact, we have overloaded numerous special methods whic dictate the behaviour of the protocol. Let’s try asking for a key that is not in the dictionary.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'middle'</span><span class="p">]</span>
 <span class="c1"># Let me find that for you...
@@ -101,8 +100,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">my_talking_dict</span><span class="p">)</span>
 <span class="c1"># Here is my length:
 # 2
-</span>
-</code></pre></div></div>
+</span></code></pre></div></div>
 <p>So we can see that each of our interactions with this <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class has some associated behaviour which is predetermined by a protocol (the code which links our actions to whatever Python outputs back to us). It turns out that all of these interactions, getting a key, setting a key, asking if a key is in the dictionary, printing the instance, asking for its length, ect., are calling methods under the namespace of the <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> which explain why our instance behaves as it does. I defined all of these methods by inheriting from <code class="language-plaintext highlighter-rouge">dict</code>, the basic Python dictionary, and overloading the behaviour myself.</p>
 
 <p>Let’s look at our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class:</p>
@@ -128,14 +126,14 @@
         <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"I heard dictionaries have constant time access. Not this time pal."</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Not this time pal."</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">False</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s">"Here is my length:"</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__len__</span><span class="p">()</span>
 </code></pre></div></div>
-<p>Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set ‘first’ to ‘Nick’ called <code class="language-plaintext highlighter-rouge">__setitem__()</code> which printed a message and then called the same method from its parent, <code class="language-plaintext highlighter-rouge">dict</code>, to actually set the key, value pair. When we asked for the value of ‘first’, our instance called <code class="language-plaintext highlighter-rouge">__getitem__()</code> which did a similar thing. <code class="language-plaintext highlighter-rouge">print()</code> called <code class="language-plaintext highlighter-rouge">__repr__()</code>. Using the <code class="language-plaintext highlighter-rouge">in</code> operator called <code class="language-plaintext highlighter-rouge">__contains__()</code>. Attempting to access a key which did not exist, ‘middle’, called <code class="language-plaintext highlighter-rouge">__getitem()__</code> first, which printed out the message “Let me find that for you…” and then when it discovered that middle was not a key in our dictionary, it called <code class="language-plaintext highlighter-rouge">__missing__()</code> which raised a <code class="language-plaintext highlighter-rouge">KeyError</code><code class="language-plaintext highlighter-rouge">. When we called our instance by adding </code><code class="language-plaintext highlighter-rouge">()</code><code class="language-plaintext highlighter-rouge"> to the end, it called </code><code class="language-plaintext highlighter-rouge">__call__()</code><code class="language-plaintext highlighter-rouge">. And finally, when we called </code><code class="language-plaintext highlighter-rouge">len()</code><code class="language-plaintext highlighter-rouge"> on our instance, it called the method </code><code class="language-plaintext highlighter-rouge">__len__()</code>`.</p>
+<p>Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set ‘first’ to ‘Nick’ called <code class="language-plaintext highlighter-rouge">__setitem__()</code> which printed a message and then called the same method from its parent, <code class="language-plaintext highlighter-rouge">dict</code>, to actually set the key, value pair. When we asked for the value of ‘first’, our instance called <code class="language-plaintext highlighter-rouge">__getitem__()</code> which did a similar thing. <code class="language-plaintext highlighter-rouge">print()</code> called <code class="language-plaintext highlighter-rouge">__repr__()</code>. Using the <code class="language-plaintext highlighter-rouge">in</code> operator called <code class="language-plaintext highlighter-rouge">__contains__()</code>. Attempting to access a key which did not exist, ‘middle’, called <code class="language-plaintext highlighter-rouge">__getitem()__</code> first, which printed out the message “Let me find that for you…” and then when it discovered that middle was not a key in our dictionary, it called <code class="language-plaintext highlighter-rouge">__missing__()</code> which raised a <code class="language-plaintext highlighter-rouge">KeyError</code>. When we called our instance by adding <code class="language-plaintext highlighter-rouge">()</code> to the end, it called <code class="language-plaintext highlighter-rouge">__call__()</code>. And finally, when we called <code class="language-plaintext highlighter-rouge">len()</code> on our instance, it called the method <code class="language-plaintext highlighter-rouge">__len__()</code>.</p>
 
 <p>If this is completely new to you, you might wonder why these special methods have leading and trailing double underscores. In Python, these special methods are called “dunders” (double underscore) and are methods whose novel implementation is strictly reserved for the core Python developers, but are supposed to be overloadded by the user. In other words, never implement your own dunder method, but feel free to alter their behaviour in the classes you create if neccessary.</p>
 
@@ -160,7 +158,7 @@
           <li class="p-name">import-this</li><li><a class="u-email" href="mailto:nicholashopewell@gmail.com">nicholashopewell@gmail.com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/NHopewell"><svg class="svg-icon"><use xlink:href="/import-this/assets/minima-social-icons.svg#github"></use></svg> <span class="username">NHopewell</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/NHopewell"><svg class="svg-icon"><use xlink:href="/import-this/assets/minima-social-icons.svg#github"></use></svg> <span class="username">NHopewell</span></a></li><li><a href="https://www.twitter.com/NickHopewell"><svg class="svg-icon"><use xlink:href="/import-this/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">NickHopewell</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
