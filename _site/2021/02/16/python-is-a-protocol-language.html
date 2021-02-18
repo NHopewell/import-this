@@ -54,85 +54,46 @@
 <p>What I mean by “top-level protocol” is that we write some code to interact with objects we are interested in working with. Perhaps we call an object which runs some code, maybe we initialize a new variable which points to a Python object, maybe we ask the length of an object with the builtin <code class="language-plaintext highlighter-rouge">len()</code>, or add two objects with the builtin <code class="language-plaintext highlighter-rouge">add()</code>, maybe we want to index into an item with square brackets [], etc. There is some top-level behaviour we perform in our scripts that calls some underyling code which dictates the behaviour of our actions.</p>
 
 <p>To hide the internal behaviour at first, imagine I created a new class called a <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> which spike back to me every time I interacted with it in some way. Imagine this new class is stored in a file called <code class="language-plaintext highlighter-rouge">talking_dict.py</code>. Let’s import it, start writing some of these top-level interactions, and see how the protocol behaves. The commented out parts of the code snippets below are the output.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">talking_dict</span> <span class="kn">import</span> <span class="n">TalkingDictionary</span>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/a9865f8398e88f50e29487688a137879.js"> </script>
 
-<span class="n">my_talking_dict</span> <span class="o">=</span> <span class="n">TalkingDictionary</span><span class="p">()</span>
-
-<span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Nick'</span>
-<span class="c1"># Setting key 'first' to value 'Nick'
-</span>
-<span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'last'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Hopewell'</span>
-<span class="c1"># Setting key 'last' to value 'Hopewell'
-</span></code></pre></div></div>
 <p>We can see above that we initialized a new <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> instance and set a few keys (first and last). Each time we did that, we had the dictionary talk back to us letting us know that it was setting the keys to the values we provided.</p>
 
 <p>Let’s try some other interactions, what if we ask for the value of a key just to be sure it was set correctly:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span>
-<span class="c1"># Let me find that for you...
-# 'Nick'
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/3d837024d3377a422368792a0e53ea6a.js"> </script>
+
 <p>The dictionary talked back to us again and let us know what the value of the first key was when it found it. Let’s continue. What if we wanted to print the dictonary:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">my_talking_dict</span><span class="p">)</span>
-<span class="c1"># Here are my key,value pairs:
-# {'first': 'Nick', 'last': 'Hopewell'}
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/5406a22deada7cf59c8ee86df92a95ce.js"> </script>
+
 <p>This is an example of using a builtin function <code class="language-plaintext highlighter-rouge">print</code> to interact with our new object. This is another example of that top-level protocol I was talking about. Let’s look at another protocol. Let’s ask if the key ‘first’ is contained in the dictionary.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'first'</span> <span class="ow">in</span> <span class="n">my_talking_dict</span>
-<span class="c1"># Not this time pal.
-# False
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/1a24376ced4b846e4c8a847a33a3323e.js"> </script>
+
 <p>We know ‘first’ is in the dictionary, we set it just a moment ago. But according to our talking dict, it’s not in there. This is because we overloaded a special method of our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> to return False all the time no matter what the user asks for. In fact, we have overloaded numerous special methods whic dictate the behaviour of the protocol. Let’s try asking for a key that is not in the dictionary.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">[</span><span class="s">'middle'</span><span class="p">]</span>
-<span class="c1"># Let me find that for you...
-#   Traceback (most recent call last):
-#       ...
-# KeyError: "You're looking for 'middle' but it ain't here."
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/09c64e5e3ebfa4285b35de2f32ed2c81.js"> </script>
+
 <p>When we ask for the value of the key ‘middle’, which is not contained in our dictionary, you can tell that at some point it is calling the same code which was called when we accessed the key ‘first’ because it prints out the message “Let me find that for you…”. And just after a <code class="language-plaintext highlighter-rouge">KeyError</code> is raised with the message “You’re looking for ‘middle’ but it ain’t here.” So at least 2 distinct peices of code were called in this interaction even though we only asked for one key.</p>
 
 <p>What is we tried to call our talking dictionary as if it were a function.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">my_talking_dict</span><span class="p">()</span>
-<span class="c1"># I have been called! Too bad calling me does nothing interesting.
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/1538a187dff04baa64ed392ba558ad85.js"> </script>
+
 <p>Notice that simply adding <code class="language-plaintext highlighter-rouge">()</code> to the end of our instance is itself one of these top-level protcols between the user and the underlying class. These ending braces are calling code behind the scenes.</p>
 
 <p>Finally, let’s use on more builtin function and ask for the length of our dictionary.</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">my_talking_dict</span><span class="p">)</span>
-<span class="c1"># Here is my length:
-# 2
-</span></code></pre></div></div>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/3ab0c33418856969bad65a49c8693bd0.js"> </script>
+
 <p>So we can see that each of our interactions with this <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class has some associated behaviour which is predetermined by a protocol (the code which links our actions to whatever Python outputs back to us). It turns out that all of these interactions, getting a key, setting a key, asking if a key is in the dictionary, printing the instance, asking for its length, ect., are calling methods under the namespace of the <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> which explain why our instance behaves as it does. I defined all of these methods by inheriting from <code class="language-plaintext highlighter-rouge">dict</code>, the basic Python dictionary, and overloading the behaviour myself.</p>
 
 <p>Let’s look at our <code class="language-plaintext highlighter-rouge">TalkingDictionary</code> class:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TalkingDictionary</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"Here are my key,value pairs:"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__repr__</span><span class="p">()</span>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/4c202b6286239d0d8d5b8182c3c4c434.js"> </script>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"I have been called! Too bad calling me does nothing interesting."</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__missing__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"You're looking for '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">' but it ain't here."</span>
-        <span class="k">raise</span> <span class="nb">KeyError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Setting key '</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s">' to value '</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s">'"</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">().</span><span class="n">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"Let me find that for you..."</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"Not this time pal."</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">False</span>
-
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"Here is my length:"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__len__</span><span class="p">()</span>
-</code></pre></div></div>
 <p>Looking at the class above, you can see which methods handle the top-level protocols we initiated in our examples. Setting a new key, like we did when we set ‘first’ to ‘Nick’ called <code class="language-plaintext highlighter-rouge">__setitem__()</code> which printed a message and then called the same method from its parent, <code class="language-plaintext highlighter-rouge">dict</code>, to actually set the key, value pair. When we asked for the value of ‘first’, our instance called <code class="language-plaintext highlighter-rouge">__getitem__()</code> which did a similar thing. <code class="language-plaintext highlighter-rouge">print()</code> called <code class="language-plaintext highlighter-rouge">__repr__()</code>. Using the <code class="language-plaintext highlighter-rouge">in</code> operator called <code class="language-plaintext highlighter-rouge">__contains__()</code>. Attempting to access a key which did not exist, ‘middle’, called <code class="language-plaintext highlighter-rouge">__getitem()__</code> first, which printed out the message “Let me find that for you…” and then when it discovered that middle was not a key in our dictionary, it called <code class="language-plaintext highlighter-rouge">__missing__()</code> which raised a <code class="language-plaintext highlighter-rouge">KeyError</code>. When we called our instance by adding <code class="language-plaintext highlighter-rouge">()</code> to the end, it called <code class="language-plaintext highlighter-rouge">__call__()</code>. And finally, when we called <code class="language-plaintext highlighter-rouge">len()</code> on our instance, it called the method <code class="language-plaintext highlighter-rouge">__len__()</code>.</p>
 
 <p>If this is completely new to you, you might wonder why these special methods have leading and trailing double underscores. In Python, these special methods are called “dunders” (double underscore) and are methods whose novel implementation is strictly reserved for the core Python developers, but are supposed to be overloadded by the user. In other words, never implement your own dunder method, but feel free to alter their behaviour in the classes you create if neccessary.</p>
