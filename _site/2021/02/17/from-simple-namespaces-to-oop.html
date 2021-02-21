@@ -80,7 +80,7 @@
 
 <p>So we can see that namespaces in Python are more or less dictionaries accessed in different ways. What if I wanted to mimick the behaviour of a dictionary ourselfs to dabble in our own namespace creation?</p>
 
-<h3 id="step-one-creating-our-own-dictionary-behaviour-manually-with-arrays">Step one: creating our own dictionary behaviour manually with arrays</h3>
+<h3 id="iteration-one-creating-our-own-dictionary-behaviour-manually-with-arrays">Iteration one: creating our own dictionary behaviour manually with arrays</h3>
 
 <p>If we want to create our own mappings of names to values, then we will need to create some buckets for names (or keys) and some buckets for values. To create some buckets, we could create list of lists of size <code class="language-plaintext highlighter-rouge">size</code> to represent keys (where each imbedded list represents its own bucket). And we could do the same for values.</p>
 <noscript><pre>400: Invalid request</pre></noscript>
@@ -101,7 +101,7 @@
 
 <p>An obvious next step would be to try to avoid this manual nature of our current implementation by moving logic into functions. We want to have functions to set and get items from our namespace.</p>
 
-<h3 id="step-two-creating-our-own-dictionary-behaviour-with-functions">Step two: creating our own dictionary behaviour with functions</h3>
+<h3 id="iteration-two-creating-our-own-dictionary-behaviour-with-functions">Iteration two: creating our own dictionary behaviour with functions</h3>
 
 <p>Our main steps to creating and using our own namespace is to 1) initialize the key and value buckets, 2) set items at the same index within the key and value buckets by hashing the key, and 3) getting an item from the value bucket based on the key we pass. To implement and use these three steps as functions, we would move the code into functions as so:</p>
 <noscript><pre>400: Invalid request</pre></noscript>
@@ -115,15 +115,76 @@
   <li>If we continue this way, we will pollute the global namespace quickly and run into name collisions.</li>
 </ul>
 
-<p>The core issue is that one namespace is not enough. A potential sollution would be to take this same functional approach we laid out above, but instead of using the global namespace, we initialize a smaller namespace within globals, a new dictionary, and populate that instead.</p>
+<p>The core issue is that one namespace is not enough. A potential sollution would be to take this same functional approach we laid out above, but instead of relying on the global namespace, we initialize a smaller namespace within globals, a new dictionary, and populate that instead.</p>
 
-<h3 id="step-three-creating-our-own-dictionary-behaviour-with-subdictionary-namespaces">Step three: creating our own dictionary behaviour with subdictionary namespaces</h3>
+<h3 id="iteration-three-creating-our-own-dictionary-behaviour-with-subdictionary-namespaces">Iteration three: creating our own dictionary behaviour with subdictionary namespaces</h3>
 
-<p>The key difference in this step is to reduce the reliance on the global namespace. You will see in the code below that the only change I am really making is that I am creating one new namespace each time I want to model the behaviour of a dictionary, storing values such as <code class="language-plaintext highlighter-rouge">size</code>, <code class="language-plaintext highlighter-rouge">key_buckets</code>, and <code class="language-plaintext highlighter-rouge">value_buckets</code> in that namespace instead of <code class="language-plaintext highlighter-rouge">globals()</code>.</p>
+<p>You will see in the code below that the only thing I am really changing is that I am creating a new namespace each time I want to model the behaviour of a dictionary, storing values such as <code class="language-plaintext highlighter-rouge">size</code>, <code class="language-plaintext highlighter-rouge">key_buckets</code>, and <code class="language-plaintext highlighter-rouge">value_buckets</code> in that namespace instead of <code class="language-plaintext highlighter-rouge">globals()</code>. Notice that <code class="language-plaintext highlighter-rouge">initialize_buckets()</code> now takes a namespace which already has a size stored. <code class="language-plaintext highlighter-rouge">set_item()</code> and <code class="language-plaintext highlighter-rouge">get_item()</code> also take this namespace as an argument.</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/b7c3b5cf246119f7a9a5e98fecd10230.js"> </script>
 
-<p>With this implementation, everytime we initialize our buckets we are creating our own mini namespaces in the form of new dictionaries. This makes polluting the global namespace more difficult.</p>
+<p>With this implementation, everytime we initialize our buckets we are creating our own namespace in the form of a new dictionary. This makes polluting the global namespace more difficult. This is what ournamespace looks like:</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/a882dcb741b4709e14e187f0e7d1c7fc.js"> </script>
 
-<p>You might think it’s strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, <code class="language-plaintext highlighter-rouge">globals()</code>, <code class="language-plaintext highlighter-rouge">locals()</code>, and <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> are all dictionaries. And as we have seen, <strong>classes in Python are just thin layers which sit ontop of dictionaries.</strong> The actual module I am writing this code in itself can be represented as a dictionary. If you have ever run a debugger on a python module you’ll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.</p>
+<p>Although we now have the ability to work with many namespaces, this approach still isn’t perfect (albeit very useful).</p>
+
+<p><strong>Problems with this implementation:</strong></p>
+<ul>
+  <li>Clunky, we ideally do not want to access values from each of our namespaces like we do with dictionaries (square bracket notation).</li>
+  <li>Not Pythonic: if our code is constantly filled with brakcets and strings, it will be ugly. Does this matter in Python? Absolutely. The very first line of the Zen of Python states “beautiful is better than ugly”.</li>
+</ul>
+
+<p>A better way would be to use dot notation. So instead of saying <code class="language-plaintext highlighter-rouge">namespace["key"]</code> we would like to say <code class="language-plaintext highlighter-rouge">namespace.key</code>.</p>
+
+<h3 id="iteration-four-creating-our-own-dictionary-behaviour-with-simplenamespace">Iteration four: creating our own dictionary behaviour with SimpleNamespace</h3>
+
+<p>Again the code will barely change. Now, instead of using a dictionary everytime we want to create a namespace, we will use SimpleNamspace instead. Recall that SimpleNamespace let’s use use this dot notation we want.</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/e296dbe105ad8670895007c2f7e23386.js"> </script>
+
+<p>Now the notation of accessing values in our namespace is much nicer. But you might have noticed that this solution is not fully automated. In fact, there are a couple glarring problems:</p>
+
+<p><strong>Problems with this implementation:</strong></p>
+<ul>
+  <li>We need to manually create new SimpleNamespaces every time we need a namespace.</li>
+  <li>We need to pass that namespace to each single function call, causing a lot of repetitive code.</li>
+</ul>
+
+<p>We will now see that the solution to this problem is to use Python classes.</p>
+
+<h3 id="iteration-five-creating-our-own-dictionary-behaviour-with-our-own-python-class">Iteration five: creating our own dictionary behaviour with our own Python class</h3>
+
+<p>When writing the same example as a Python class, notice that all I am changing is that the indentation is different and I am passing <code class="language-plaintext highlighter-rouge">self</code> instead of the namespace (like I did before). <code class="language-plaintext highlighter-rouge">self</code> refers to the instance itself, which I called “namespace”. There is no place where I am initializing a builtin dict nor a SimpleNamespace. The variable “namespace” becomes the actual namespace directly this time. Our class builds a new namespace for us when we instantiate it.</p>
+
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/2e85e2be29123a5289ba861efba4f8a3.js"> </script>
+
+<p>Notice above that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via <code class="language-plaintext highlighter-rouge">self</code>. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.</p>
+
+<p>Although this implementation is great, it is not perfect.</p>
+
+<p><strong>Problems with this implementation:</strong></p>
+<ul>
+  <li>We have to call method names every time to set and get items.</li>
+</ul>
+
+<p>Ideally, when we initialize our buckets, set items in our buckets, and get items from our buckets, we do not want to write the entire method name out. We want this to happen automatically and share a common protocol with other objects.</p>
+
+<h3 id="iteration-six-creating-our-own-dictionary-behaviour-with-dunder-methods-and-operator-protocols">Iteration six: creating our own dictionary behaviour with dunder methods and operator protocols</h3>
+
+<p>If you are not familiar with the operator protocol of Python, I highly recommend you read a previous post I made which explains it: <a href="https://nhopewell.github.io/import-this/2021/02/16/python-is-a-protocol-language.html" target="_blank"><strong>Python is a protocol-based language</strong></a>. It is important to understand this protocol behaviour to understand how dunder methods work.</p>
+
+<p>Essentially, we want to overload some special methods which the Python core developers have implemented so we can interact with Pythons operator protocol (called “dunders” because they are surrounded by double underscores). In our case, <code class="language-plaintext highlighter-rouge">initialize_buckets()</code> will become the dunder method <code class="language-plaintext highlighter-rouge">__init__()</code>, <code class="language-plaintext highlighter-rouge">set_item()</code> will become <code class="language-plaintext highlighter-rouge">__setitem__()</code>, and <code class="language-plaintext highlighter-rouge">get_item()</code> will become <code class="language-plaintext highlighter-rouge">__getitem()__</code>. To understand more about these special items, read about them in the <a target="_blank" href="https://docs.python.org/3/reference/datamodel.html">Python Data Model docs.</a></p>
+
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/649d46669216f762788abab764d3a426.js"> </script>
+
+<p>You can now see that we are directly recreating the builtin dict by mimicking the behaviour of initializing, as well as getting and setting new items. The behaviour Python expects the user to input in order to create, mutate, and access our new class is exactly the same as what is expected by real dictionaries. <em>This</em> consistency is what makes it an operator protocol.</p>
+
+<p>We now have solved all of our previous problems and have a very consistent interface. And it turns out, this system comes with a lot of great side effects we won’t discuss here. By following each iteration, we solved some problems and created new ones. Slowly we built up to the final solution in iteration six. This solution is how Object-Oriented programming is implemented in Python. Hopefully this style of programming now feels natural to you and you have a better appreciation for it.</p>
+
+<p>You also hopefully have a better appreciation for how poweful dictionaries are in Python. We can completely mimick the behaviour of classes and methods with dictionaries and functions. You might think it’s strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, <code class="language-plaintext highlighter-rouge">globals()</code>, <code class="language-plaintext highlighter-rouge">locals()</code>, and <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> are all dictionaries. And as we have seen, <strong>classes in Python are just thin layers which sit ontop of dictionaries.</strong> The actual module I am writing this code in can be represented as a dictionary itself. If you have ever run a debugger on a python module you’ll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.</p>
 
   </div><a class="u-url" href="/import-this/2021/02/17/from-simple-namespaces-to-oop.html" hidden></a>
 </article>

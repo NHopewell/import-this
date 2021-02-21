@@ -31,7 +31,7 @@ Now we have seen 3 examples of namespaces in Python so far: user-defined diction
 
 So we can see that namespaces in Python are more or less dictionaries accessed in different ways. What if I wanted to mimick the behaviour of a dictionary ourselfs to dabble in our own namespace creation?    
 
-### Step one: creating our own dictionary behaviour manually with arrays
+### Iteration one: creating our own dictionary behaviour manually with arrays
 
 If we want to create our own mappings of names to values, then we will need to create some buckets for names (or keys) and some buckets for values. To create some buckets, we could create list of lists of size ```size``` to represent keys (where each imbedded list represents its own bucket). And we could do the same for values.  
 {% gist fc64d9e5777b286b0fae1c3537607ba7 %}
@@ -49,7 +49,7 @@ Now we can manually hash keys and values into buckets at the same index of these
 
 An obvious next step would be to try to avoid this manual nature of our current implementation by moving logic into functions. We want to have functions to set and get items from our namespace.  
 
-### Step two: creating our own dictionary behaviour with functions  
+### Iteration two: creating our own dictionary behaviour with functions  
 
 Our main steps to creating and using our own namespace is to 1) initialize the key and value buckets, 2) set items at the same index within the key and value buckets by hashing the key, and 3) getting an item from the value bucket based on the key we pass. To implement and use these three steps as functions, we would move the code into functions as so:
 {% gist 66b1d800cfb85ec96518ba16167b2290 %}  
@@ -60,15 +60,62 @@ We can see by looking at the code within the ```if __name__ == '__main__':``` bl
 - We are still relying on the global namespace and so a variable name can only be used once. 
 - If we continue this way, we will pollute the global namespace quickly and run into name collisions.  
 
-The core issue is that one namespace is not enough. A potential sollution would be to take this same functional approach we laid out above, but instead of using the global namespace, we initialize a smaller namespace within globals, a new dictionary, and populate that instead.
+The core issue is that one namespace is not enough. A potential sollution would be to take this same functional approach we laid out above, but instead of relying on the global namespace, we initialize a smaller namespace within globals, a new dictionary, and populate that instead.
 
-### Step three: creating our own dictionary behaviour with subdictionary namespaces   
+### Iteration three: creating our own dictionary behaviour with subdictionary namespaces   
 
-The key difference in this step is to reduce the reliance on the global namespace. You will see in the code below that the only change I am really making is that I am creating one new namespace each time I want to model the behaviour of a dictionary, storing values such as ```size```, ```key_buckets```, and ```value_buckets``` in that namespace instead of ```globals()```.
+You will see in the code below that the only thing I am really changing is that I am creating a new namespace each time I want to model the behaviour of a dictionary, storing values such as ```size```, ```key_buckets```, and ```value_buckets``` in that namespace instead of ```globals()```. Notice that ```initialize_buckets()``` now takes a namespace which already has a size stored. ```set_item()``` and ```get_item()``` also take this namespace as an argument. 
+{% gist b7c3b5cf246119f7a9a5e98fecd10230 %}
 
+With this implementation, everytime we initialize our buckets we are creating our own namespace in the form of a new dictionary. This makes polluting the global namespace more difficult. This is what ournamespace looks like:
+{% gist a882dcb741b4709e14e187f0e7d1c7fc %}  
 
+Although we now have the ability to work with many namespaces, this approach still isn't perfect (albeit very useful).
 
-With this implementation, everytime we initialize our buckets we are creating our own mini namespaces in the form of new dictionaries. This makes polluting the global namespace more difficult.   
+**Problems with this implementation:**  
+- Clunky, we ideally do not want to access values from each of our namespaces like we do with dictionaries (square bracket notation). 
+- Not Pythonic: if our code is constantly filled with brakcets and strings, it will be ugly. Does this matter in Python? Absolutely. The very first line of the Zen of Python states "beautiful is better than ugly".  
 
+A better way would be to use dot notation. So instead of saying ```namespace["key"]``` we would like to say ```namespace.key```.  
 
-You might think it's strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, ```globals()```, ```locals()```, and ```SimpleNamespace``` are all dictionaries. And as we have seen, **classes in Python are just thin layers which sit ontop of dictionaries.** The actual module I am writing this code in itself can be represented as a dictionary. If you have ever run a debugger on a python module you'll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs. 
+### Iteration four: creating our own dictionary behaviour with SimpleNamespace  
+
+Again the code will barely change. Now, instead of using a dictionary everytime we want to create a namespace, we will use SimpleNamspace instead. Recall that SimpleNamespace let's use use this dot notation we want.
+{% gist e296dbe105ad8670895007c2f7e23386 %}  
+
+Now the notation of accessing values in our namespace is much nicer. But you might have noticed that this solution is not fully automated. In fact, there are a couple glarring problems: 
+
+**Problems with this implementation:**  
+- We need to manually create new SimpleNamespaces every time we need a namespace.  
+- We need to pass that namespace to each single function call, causing a lot of repetitive code.   
+
+We will now see that the solution to this problem is to use Python classes.
+
+### Iteration five: creating our own dictionary behaviour with our own Python class  
+
+When writing the same example as a Python class, notice that all I am changing is that the indentation is different and I am passing ```self``` instead of the namespace (like I did before). ```self``` refers to the instance itself, which I called "namespace". There is no place where I am initializing a builtin dict nor a SimpleNamespace. The variable "namespace" becomes the actual namespace directly this time. Our class builds a new namespace for us when we instantiate it.   
+
+{% gist 2e85e2be29123a5289ba861efba4f8a3 %}  
+
+Notice above that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via ```self```. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.   
+
+Although this implementation is great, it is not perfect.   
+
+**Problems with this implementation:**  
+- We have to call method names every time to set and get items.   
+
+Ideally, when we initialize our buckets, set items in our buckets, and get items from our buckets, we do not want to write the entire method name out. We want this to happen automatically and share a common protocol with other objects. 
+
+### Iteration six: creating our own dictionary behaviour with dunder methods and operator protocols  
+
+If you are not familiar with the operator protocol of Python, I highly recommend you read a previous post I made which explains it: <a href="https://nhopewell.github.io/import-this/2021/02/16/python-is-a-protocol-language.html" target="_blank"><strong>Python is a protocol-based language</strong></a>. It is important to understand this protocol behaviour to understand how dunder methods work.  
+
+Essentially, we want to overload some special methods which the Python core developers have implemented so we can interact with Pythons operator protocol (called "dunders" because they are surrounded by double underscores). In our case, ```initialize_buckets()``` will become the dunder method ```__init__()```, ```set_item()``` will become ```__setitem__()```, and ```get_item()``` will become ```__getitem()__```. To understand more about these special items, read about them in the <a target="_blank" href="https://docs.python.org/3/reference/datamodel.html">Python Data Model docs.</a>
+
+{% gist 649d46669216f762788abab764d3a426 %}  
+
+You can now see that we are directly recreating the builtin dict by mimicking the behaviour of initializing, as well as getting and setting new items. The behaviour Python expects the user to input in order to create, mutate, and access our new class is exactly the same as what is expected by real dictionaries. *This* consistency is what makes it an operator protocol.  
+
+We now have solved all of our previous problems and have a very consistent interface. And it turns out, this system comes with a lot of great side effects we won't discuss here. By following each iteration, we solved some problems and created new ones. Slowly we built up to the final solution in iteration six. This solution is how Object-Oriented programming is implemented in Python. Hopefully this style of programming now feels natural to you and you have a better appreciation for it.  
+
+You also hopefully have a better appreciation for how poweful dictionaries are in Python. We can completely mimick the behaviour of classes and methods with dictionaries and functions. You might think it's strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, ```globals()```, ```locals()```, and ```SimpleNamespace``` are all dictionaries. And as we have seen, **classes in Python are just thin layers which sit ontop of dictionaries.** The actual module I am writing this code in can be represented as a dictionary itself. If you have ever run a debugger on a python module you'll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs. 
