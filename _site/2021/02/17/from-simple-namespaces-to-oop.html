@@ -49,9 +49,13 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don’t often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?</p>
 
-<p>In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. We will consider problems along the way at each step of the journey. Problems which will motivate some kind of solution in order to progress forward as developers. These solutions will build up in sophistication, solving previous problems, but they will also present new problems of their own. Each problem and solution will get us a bit closer the natural end state of object-orientation. And in doing so, we will have a better appreciation classes and objects, why they are so important, and we will understand that object-oriented programming was a natural outcome which resulted from solving big problems developers faced in the past.</p>
+<p>In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous by asking what problems might arise with our current implementation, and eventually come to the conclusion that object-oriented programming is a <em>natural solution</em> to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.</p>
 
-<p>To start, we must consider some ways we can create namespaces in Python. If you’re not familiar, namespaces are simply somewhere that we store mappings of names to values. We have a few ways in Python to accomplish this. Firstly, we could use our own dictionaries. Let’s create some dictionaries of people and map those people to their favorite bands.</p>
+<h3 id="first-things-first-namespaces-in-python">First things first: namespaces in Python</h3>
+
+<p>To start, we must consider some ways we can create namespaces in Python. If you’re not familiar, namespaces are simply somewhere that we store mappings of names to values. The important thing to remember with namespaces is that <em>one namespace is never enough</em>. In fact, sometimes we need a lot of namespaces to organize our logic. We have a few ways in Python to accomplish namespaces.</p>
+
+<p>Firstly, we could use our own dictionaries. Let’s create some dictionaries of people and map those people to their favorite bands.</p>
 
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/10905cff2b84b3a9829529592f6aeae2.js"> </script>
@@ -70,11 +74,56 @@
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/7574e2934efff664913823607744bc12.js"> </script>
 
-<p>So we have seen 3 examples of namespaces in Python so far: user-defined dictionaries, <code class="language-plaintext highlighter-rouge">globals()</code>, and <code class="language-plaintext highlighter-rouge">locals()</code>. In the case of our own dictionaries, we needed to access values by using square brackets and passing in a key. As for <code class="language-plaintext highlighter-rouge">globals()</code>, and <code class="language-plaintext highlighter-rouge">locals()</code>, we can reference them directly when we call the variable in the correct scope. Another way we can do namespaces with Python is through <code class="language-plaintext highlighter-rouge">types.SimpleNamespace</code>. This time, we reference values in the namespace with dot notation:</p>
+<p>Now we have seen 3 examples of namespaces in Python so far: user-defined dictionaries, <code class="language-plaintext highlighter-rouge">globals()</code>, and <code class="language-plaintext highlighter-rouge">locals()</code>. In the case of our own dictionaries, we needed to access values by using square brackets and passing in a key. As for <code class="language-plaintext highlighter-rouge">globals()</code>, and <code class="language-plaintext highlighter-rouge">locals()</code>, we can reference them directly when we call the variable in the correct scope. Another way we can do namespaces with Python is through <code class="language-plaintext highlighter-rouge">types.SimpleNamespace</code>. This time, we reference values in the namespace with dot notation:</p>
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/7a1ca01d18955a1143d8253c59871a94.js"> </script>
 
 <p>So we can see that namespaces in Python are more or less dictionaries accessed in different ways. What if I wanted to mimick the behaviour of a dictionary ourselfs to dabble in our own namespace creation?</p>
+
+<h3 id="step-one-creating-our-own-dictionary-behaviour-manually-with-arrays">Step one: creating our own dictionary behaviour manually with arrays</h3>
+
+<p>If we want to create our own mappings of names to values, then we will need to create some buckets for names (or keys) and some buckets for values. To create some buckets, we could create list of lists of size <code class="language-plaintext highlighter-rouge">size</code> to represent keys (where each imbedded list represents its own bucket). And we could do the same for values.</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/fc64d9e5777b286b0fae1c3537607ba7.js"> </script>
+
+<p>We will also need some way to connect the key buckets and value buckets. To do this, we could simply <code class="language-plaintext highlighter-rouge">hash()</code> the key % size (the length of the lists). This will return an integer in the range of 0 to size-1 we can use to index into our buckets. Here is what that might look like:</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/ecae1ec3956f3f524ec5904273a3b72d.js"> </script>
+
+<p>Now we can manually hash keys and values into buckets at the same index of these two lists. So we have a hacky dictionary we can play with.</p>
+
+<p><strong>Problems with this implementation:</strong></p>
+<ul>
+  <li>Our key and value buckets are both stored in the global namespace which can quickly become cluttered with variable names. Recall that one namespace is never enough.</li>
+  <li>We have to manually create each peice of this solution (creating buckets, hashing to those buckets, and then appending to those buckets).</li>
+  <li>No modularity or extensibility in this implementation.</li>
+</ul>
+
+<p>An obvious next step would be to try to avoid this manual nature of our current implementation by moving logic into functions. We want to have functions to set and get items from our namespace.</p>
+
+<h3 id="step-two-creating-our-own-dictionary-behaviour-with-functions">Step two: creating our own dictionary behaviour with functions</h3>
+
+<p>Our main steps to creating and using our own namespace is to 1) initialize the key and value buckets, 2) set items at the same index within the key and value buckets by hashing the key, and 3) getting an item from the value bucket based on the key we pass. To implement and use these three steps as functions, we would move the code into functions as so:</p>
+<noscript><pre>400: Invalid request</pre></noscript>
+<script src="https://gist.github.com/66b1d800cfb85ec96518ba16167b2290.js"> </script>
+
+<p>We can see by looking at the code within the <code class="language-plaintext highlighter-rouge">if __name__ == '__main__':</code> block that we now have a functional way to create something which behaves like a dictionary. This is an improvement over the purely manual approach but is far from perfect.</p>
+
+<p><strong>Problems with this implementation:</strong></p>
+<ul>
+  <li>We are still relying on the global namespace and so a variable name can only be used once.</li>
+  <li>If we continue this way, we will pollute the global namespace quickly and run into name collisions.</li>
+</ul>
+
+<p>The core issue is that one namespace is not enough. A potential sollution would be to take this same functional approach we laid out above, but instead of using the global namespace, we initialize a smaller namespace within globals, a new dictionary, and populate that instead.</p>
+
+<h3 id="step-three-creating-our-own-dictionary-behaviour-with-subdictionary-namespaces">Step three: creating our own dictionary behaviour with subdictionary namespaces</h3>
+
+<p>The key difference in this step is to reduce the reliance on the global namespace. You will see in the code below that the only change I am really making is that I am creating one new namespace each time I want to model the behaviour of a dictionary, storing values such as <code class="language-plaintext highlighter-rouge">size</code>, <code class="language-plaintext highlighter-rouge">key_buckets</code>, and <code class="language-plaintext highlighter-rouge">value_buckets</code> in that namespace instead of <code class="language-plaintext highlighter-rouge">globals()</code>.</p>
+
+<p>With this implementation, everytime we initialize our buckets we are creating our own mini namespaces in the form of new dictionaries. This makes polluting the global namespace more difficult.</p>
+
+<p>You might think it’s strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, <code class="language-plaintext highlighter-rouge">globals()</code>, <code class="language-plaintext highlighter-rouge">locals()</code>, and <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> are all dictionaries. And as we have seen, <strong>classes in Python are just thin layers which sit ontop of dictionaries.</strong> The actual module I am writing this code in itself can be represented as a dictionary. If you have ever run a debugger on a python module you’ll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.</p>
 
   </div><a class="u-url" href="/import-this/2021/02/17/from-simple-namespaces-to-oop.html" hidden></a>
 </article>
