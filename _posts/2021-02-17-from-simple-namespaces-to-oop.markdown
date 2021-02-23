@@ -5,7 +5,7 @@ date:   2021-02-17 10:26:00 -0500
 ---  
 As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don't often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?  
 
-In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous by asking what problems might arise with our current implementation, and eventually come to the conclusion that object-oriented programming is a *natural solution* to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.
+In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous and ask what problems might arise with our current implementation. Eventually, we will come to the conclusion that object-oriented programming is a *natural solution* to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.
 
 ### First things first: namespaces in Python
 
@@ -17,13 +17,13 @@ Firstly, we could use our own dictionaries. Let's create some dictionaries of pe
 
 We have 3 namespaces above. One for just Beatles fans, one for only Rolling Stones fans, and one which combines the previous two.  
 
-Dictionaries are one way to store name associated to values. But isn't the mapping of names to values what happens every time we declare a variable in Python? If I said ```name = 'nick'``` Python has to store that mapping somewhere. And it turns out that we are always using namespaces in Python, whether we are conscious of it or not, through ```globals()```. This global namespace is where our declared variables are stored and accessed when we reference them somewhere else. And ```globals()``` is a dictionary itself. We can see below that I can reference the variable ```name``` in the global namespace directly by simply calling the variable. But also, I can access that variable by passing it in string format as a key to ```globals()```, like so:
+Dictionaries are one way to store names associated to values. But isn't the mapping of names to values what happens every time we declare a variable in Python? If I said ```name = 'nick'``` Python has to store that mapping somewhere. And it turns out that we are always using namespaces in Python, whether we are conscious of it or not, through ```globals()```. This global namespace is where our declared variables are stored and accessed when we reference them somewhere else. And ```globals()``` is a dictionary itself. We can see below that I can reference the variable ```name``` in the global namespace directly by simply calling the variable. But also, I can access that variable by passing it in string format as a key to ```globals()```, like so:
 {% gist cc1185bfe3151734842aff45ffbd9bb5 %}  
 
 And infact, I can update ```globals()``` directly and see that change immediately by calling the variable:
 {% gist 8cb80968ecb55b46eb99d0bb93c04e3e %}  
 
-As you probably imagined, we need a local namespace for our local scopes inside, say, a function. This local namespace is works the exact same way as ```globals()``` and is called ```locals()```. In the code below, I will locally scope some variables inside of a function and print them out when the funtion is called. 
+As you probably imagined, we need a local namespace for our local scopes inside, say, a function. This local namespace (```locals()```) works the exact same way as ```globals()```. In the code below, I will locally scope some variables inside of a function and print them out when the function is called. 
 {% gist 7574e2934efff664913823607744bc12 %}  
 
 Now we have seen 3 examples of namespaces in Python so far: user-defined dictionaries, ```globals()```, and ```locals()```. In the case of our own dictionaries, we needed to access values by using square brackets and passing in a key. As for ```globals()```, and ```locals()```, we can reference them directly when we call the variable in the correct scope. Another way we can do namespaces with Python is through ```types.SimpleNamespace```. This time, we reference values in the namespace with dot notation: 
@@ -45,7 +45,7 @@ Now we can manually hash keys and values into buckets at the same index of these
 **Problems with this implementation:**  
 - Our key and value buckets are both stored in the global namespace which can quickly become cluttered with variable names. Recall that one namespace is never enough.  
 - We have to manually create each peice of this solution (creating buckets, hashing to those buckets, and then appending to those buckets). 
-- No modularity or extensibility in this implementation.   
+- No modularity or extensibility is baked into this implementation.   
 
 An obvious next step would be to try to avoid this manual nature of our current implementation by moving logic into functions. We want to have functions to set and get items from our namespace.  
 
@@ -74,7 +74,7 @@ Although we now have the ability to work with many namespaces, this approach sti
 
 **Problems with this implementation:**  
 - Clunky, we ideally do not want to access values from each of our namespaces like we do with dictionaries (square bracket notation). 
-- Not Pythonic: if our code is constantly filled with brakcets and strings, it will be ugly. Does this matter in Python? Absolutely. The very first line of the Zen of Python states "beautiful is better than ugly".  
+- Not Pythonic: if our code is nothing but bracket notation and strings to get every value, it will be very ugly and redundant. Does this matter in Python? Absolutely. The very first line of the Zen of Python states "beautiful is better than ugly".  
 
 A better way would be to use dot notation. So instead of saying ```namespace["key"]``` we would like to say ```namespace.key```.  
 
@@ -97,12 +97,13 @@ When writing the same example as a Python class, notice that all I am changing i
 
 {% gist 2e85e2be29123a5289ba861efba4f8a3 %}  
 
-Notice above that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via ```self```. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.   
+Notice that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via ```self```. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.   
 
 Although this implementation is great, it is not perfect.   
 
 **Problems with this implementation:**  
-- We have to call method names every time to set and get items.   
+- We have to call method names every time to set and get items. 
+- We want to have support for some kind of generic protocol to handle common operations done with all objects of different types. 
 
 Ideally, when we initialize our buckets, set items in our buckets, and get items from our buckets, we do not want to write the entire method name out. We want this to happen automatically and share a common protocol with other objects. 
 
@@ -118,4 +119,4 @@ You can now see that we are directly recreating the builtin dict by mimicking th
 
 We now have solved all of our previous problems and have a very consistent interface. And it turns out, this system comes with a lot of great side effects we won't discuss here. By following each iteration, we solved some problems and created new ones. Slowly, we built up to the final solution in iteration six. This solution is how Object-Oriented programming is implemented in Python. Hopefully this style of programming now feels natural to you and you have a better appreciation for it.  
 
-You also hopefully have a better appreciation for how poweful dictionaries are in Python. We can completely mimick the behaviour of classes and methods with dictionaries and functions. You might think it's strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, ```globals()```, ```locals()```, and ```SimpleNamespace``` are all represented as dictionaries. And as we have seen, classes in Python have a lot of similarities to dictionaries. The actual module I am writing this code in can be represented as a dictionary itself. If you have ever run a debugger on a python module you'll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs. 
+You also hopefully have a better appreciation for how poweful dictionaries are in Python. In Python, many important things are dictionaries. Like we mentioned before, ```globals()```, ```locals()```, and ```SimpleNamespace``` can all be represented as dictionaries. And as we have seen, classes in Python have a lot of similarities to dictionaries. The actual module I am writing this code in can be represented as a dictionary as well. If you have ever run a debugger on a python module you'll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.
