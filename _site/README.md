@@ -1,8 +1,12 @@
 # import-this
 
 
-This is the repository for my programming blog. I write mainly about Python and the surrrounding ececosystem, or anything coding-related that I find interesting. 
-The blog is built with Jekyll.
+This is the repository for my programming blog 📝.  
 
-https://nhopewell.github.io/import-this/
+I write mainly about Python 🐍 and the surrrounding ecosystem (anything I find interesting and hope others do too).
+
+### visit: [nicholashopewell.com/import-this/](https://nicholashopewell.com/import-this/)
+
+
+The blog is built with [Jekyll 🧪](https://jekyllrb.com/).
 
