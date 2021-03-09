@@ -4,7 +4,7 @@ title: About
 #permalink: /about/
 ---
 
-My name is Nick and I love Python. This is my personal blog about all things Python and its surrounding ecosystem. Python makes programming fun again. Don't belive me? Just type ```import antigravity``` into your repr. 
+My name is <a href="https://nicholashopewell.com/" target="_blank"><strong>Nick</strong></a> and I love Python. This is my personal blog about all things Python and its surrounding ecosystem. Python makes programming fun again. Don't belive me? Just type ```import antigravity``` into your repr. 
 
 Some of my posts will be practical and immediately useful, such as <a href="https://nicholashopewell.com/import-this/2021/02/17/from-simple-namespaces-to-oop.html" target="_blank"><strong>this post</strong></a>. Other posts will try to understand and answer some of the more fun quirks such as why the code below evaluates to True given a value of 256, but False when given a value of 257.
 
