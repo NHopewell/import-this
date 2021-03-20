@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="A journey from simple namespaces to object oriented programming" />
 <script type="application/ld+json">
-{"headline":"A journey from simple namespaces to object oriented programming","dateModified":"2021-02-17T10:26:00-05:00","url":"/import-this/2021/02/17/from-simple-namespaces-to-oop.html","datePublished":"2021-02-17T10:26:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/17/from-simple-namespaces-to-oop.html"},"description":"As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don’t often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"dateModified":"2021-02-17T10:26:00-05:00","datePublished":"2021-02-17T10:26:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"/import-this/2021/02/17/from-simple-namespaces-to-oop.html"},"url":"/import-this/2021/02/17/from-simple-namespaces-to-oop.html","description":"As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don’t often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?","headline":"A journey from simple namespaces to object oriented programming","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/import-this/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/import-this/feed.xml" title="import-this" /></head>
 <body><header class="site-header" role="banner">
@@ -49,7 +49,7 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don’t often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?</p>
 
-<p>In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous by asking what problems might arise with our current implementation, and eventually come to the conclusion that object-oriented programming is a <em>natural solution</em> to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.</p>
+<p>In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous and ask what problems might arise with our current implementation. Eventually, we will come to the conclusion that object-oriented programming is a <em>natural solution</em> to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.</p>
 
 <h3 id="first-things-first-namespaces-in-python">First things first: namespaces in Python</h3>
 
@@ -62,7 +62,7 @@
 
 <p>We have 3 namespaces above. One for just Beatles fans, one for only Rolling Stones fans, and one which combines the previous two.</p>
 
-<p>Dictionaries are one way to store name associated to values. But isn’t the mapping of names to values what happens every time we declare a variable in Python? If I said <code class="language-plaintext highlighter-rouge">name = 'nick'</code> Python has to store that mapping somewhere. And it turns out that we are always using namespaces in Python, whether we are conscious of it or not, through <code class="language-plaintext highlighter-rouge">globals()</code>. This global namespace is where our declared variables are stored and accessed when we reference them somewhere else. And <code class="language-plaintext highlighter-rouge">globals()</code> is a dictionary itself. We can see below that I can reference the variable <code class="language-plaintext highlighter-rouge">name</code> in the global namespace directly by simply calling the variable. But also, I can access that variable by passing it in string format as a key to <code class="language-plaintext highlighter-rouge">globals()</code>, like so:</p>
+<p>Dictionaries are one way to store names associated to values. But isn’t the mapping of names to values what happens every time we declare a variable in Python? If I said <code class="language-plaintext highlighter-rouge">name = 'nick'</code> Python has to store that mapping somewhere. And it turns out that we are always using namespaces in Python, whether we are conscious of it or not, through <code class="language-plaintext highlighter-rouge">globals()</code>. This global namespace is where our declared variables are stored and accessed when we reference them somewhere else. And <code class="language-plaintext highlighter-rouge">globals()</code> is a dictionary itself. We can see below that I can reference the variable <code class="language-plaintext highlighter-rouge">name</code> in the global namespace directly by simply calling the variable. But also, I can access that variable by passing it in string format as a key to <code class="language-plaintext highlighter-rouge">globals()</code>, like so:</p>
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/cc1185bfe3151734842aff45ffbd9bb5.js"> </script>
 
@@ -70,7 +70,7 @@
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/8cb80968ecb55b46eb99d0bb93c04e3e.js"> </script>
 
-<p>As you probably imagined, we need a local namespace for our local scopes inside, say, a function. This local namespace is works the exact same way as <code class="language-plaintext highlighter-rouge">globals()</code> and is called <code class="language-plaintext highlighter-rouge">locals()</code>. In the code below, I will locally scope some variables inside of a function and print them out when the funtion is called.</p>
+<p>As you probably imagined, we need a local namespace for our local scopes inside, say, a function. This local namespace (<code class="language-plaintext highlighter-rouge">locals()</code>) works the exact same way as <code class="language-plaintext highlighter-rouge">globals()</code>. In the code below, I will locally scope some variables inside of a function and print them out when the function is called.</p>
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/7574e2934efff664913823607744bc12.js"> </script>
 
@@ -96,7 +96,7 @@
 <ul>
   <li>Our key and value buckets are both stored in the global namespace which can quickly become cluttered with variable names. Recall that one namespace is never enough.</li>
   <li>We have to manually create each peice of this solution (creating buckets, hashing to those buckets, and then appending to those buckets).</li>
-  <li>No modularity or extensibility in this implementation.</li>
+  <li>No modularity or extensibility is baked into this implementation.</li>
 </ul>
 
 <p>An obvious next step would be to try to avoid this manual nature of our current implementation by moving logic into functions. We want to have functions to set and get items from our namespace.</p>
@@ -132,7 +132,7 @@
 <p><strong>Problems with this implementation:</strong></p>
 <ul>
   <li>Clunky, we ideally do not want to access values from each of our namespaces like we do with dictionaries (square bracket notation).</li>
-  <li>Not Pythonic: if our code is constantly filled with brakcets and strings, it will be ugly. Does this matter in Python? Absolutely. The very first line of the Zen of Python states “beautiful is better than ugly”.</li>
+  <li>Not Pythonic: if our code is nothing but bracket notation and strings to get every value, it will be very ugly and redundant. Does this matter in Python? Absolutely. The very first line of the Zen of Python states “beautiful is better than ugly”.</li>
 </ul>
 
 <p>A better way would be to use dot notation. So instead of saying <code class="language-plaintext highlighter-rouge">namespace["key"]</code> we would like to say <code class="language-plaintext highlighter-rouge">namespace.key</code>.</p>
@@ -160,13 +160,14 @@
 <noscript><pre>400: Invalid request</pre></noscript>
 <script src="https://gist.github.com/2e85e2be29123a5289ba861efba4f8a3.js"> </script>
 
-<p>Notice above that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via <code class="language-plaintext highlighter-rouge">self</code>. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.</p>
+<p>Notice that instead of passing the namespace as the first argument to each function call, when I use the class methods above (accessed with dot notation) the namespace is passed implicitly via <code class="language-plaintext highlighter-rouge">self</code>. We do not need to actually specify the namespace directly every time. Everything except for this detail is identical to the functional implementation which came before it.</p>
 
 <p>Although this implementation is great, it is not perfect.</p>
 
 <p><strong>Problems with this implementation:</strong></p>
 <ul>
   <li>We have to call method names every time to set and get items.</li>
+  <li>We want to have support for some kind of generic protocol to handle common operations done with all objects of different types.</li>
 </ul>
 
 <p>Ideally, when we initialize our buckets, set items in our buckets, and get items from our buckets, we do not want to write the entire method name out. We want this to happen automatically and share a common protocol with other objects.</p>
@@ -184,7 +185,7 @@
 
 <p>We now have solved all of our previous problems and have a very consistent interface. And it turns out, this system comes with a lot of great side effects we won’t discuss here. By following each iteration, we solved some problems and created new ones. Slowly, we built up to the final solution in iteration six. This solution is how Object-Oriented programming is implemented in Python. Hopefully this style of programming now feels natural to you and you have a better appreciation for it.</p>
 
-<p>You also hopefully have a better appreciation for how poweful dictionaries are in Python. We can completely mimick the behaviour of classes and methods with dictionaries and functions. You might think it’s strange to use dictionaries like this at first. But in Python, most important things are dictionaries. Like we mentioned before, <code class="language-plaintext highlighter-rouge">globals()</code>, <code class="language-plaintext highlighter-rouge">locals()</code>, and <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> are all represented as dictionaries. And as we have seen, classes in Python have a lot of similarities to dictionaries. The actual module I am writing this code in can be represented as a dictionary itself. If you have ever run a debugger on a python module you’ll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.</p>
+<p>You also hopefully have a better appreciation for how poweful dictionaries are in Python. In Python, many important things are dictionaries. Like we mentioned before, <code class="language-plaintext highlighter-rouge">globals()</code>, <code class="language-plaintext highlighter-rouge">locals()</code>, and <code class="language-plaintext highlighter-rouge">SimpleNamespace</code> can all be represented as dictionaries. And as we have seen, classes in Python have a lot of similarities to dictionaries. The actual module I am writing this code in can be represented as a dictionary as well. If you have ever run a debugger on a python module you’ll see that special variables such as the name of the file, its location, its package name etc., are all stored as key, value pairs.</p>
 
   </div><a class="u-url" href="/import-this/2021/02/17/from-simple-namespaces-to-oop.html" hidden></a>
 </article>
