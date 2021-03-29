@@ -11,11 +11,11 @@ At first glance, you might think ```__del__``` is called whenever ```del``` is u
 
 When I mentioned we will be learning a bit about object reference counts, you may already have a good idea of why this behaviour is happening. But let's first recreate this experiment above, with an added twist to maybe add some confusion. 
 
-We will delete x and y again, but this time just before deleting y, we will reference it by checking its type and location in memory. Then, after deleting y, we will check for its presence in the global namespace to confirm it got deleted. Again, pay close attention to when our message gets printed out. And compare where this message gets printed out to our first example. 
+We will delete x and y again, but this time just before deleting y, we will reference our new object by checking its type and location in memory. Then, after deleting y, we will check for its presence in the global namespace to confirm it has been deleted. Again, pay close attention to when our message gets printed out. And compare where this message gets printed out to our first example. 
 
 {% gist 411ccf86ea91367853b95f62e6d3a36f %}
 
-Once again, our message is not printed out when we delete x. But this time, the message also does not get printed out when we delte y. In our first example it did get printed out when we deleted y. The key to this situation will be explained below, but it has to do with the fact that I read from y in line 6 before deleting on line 9. Something I did not do in the first example. 
+Once again, our message is not printed out when we delete x. But this time, the message also does not get printed out when we delete y. In our first example, the message did get printed out when we deleted y. The key to this situation will be explained below, but it has to do with the fact that I read from y in line 6 before deleting on line 9. Something I did not do in the first example. 
 
 So what is going on here?
 
