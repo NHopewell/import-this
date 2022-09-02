@@ -3,7 +3,7 @@ layout: post
 title:  "A journey from simple namespaces to object oriented programming"
 date:   2021-02-17 10:26:00 -0500
 ---  
-As Python developers we are constantly surrounded by objects in every program we write. Although we are always surrounded by these objects, we don't often stop and conciously consider their importance. How did programming in langauages such as Python become object-oriented to begin with? What factors led to the object-oriented paradigm arising as the star of the show? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?  
+As Python developers we are constantly surrounded by objects. Despite this, we don't often stop and conciously consider their importance. How did programming in langauages such as Python come to support object-oriented programming to begin with? What factors led to the object-oriented paradigm arising as such a popular paradigm? What are the motivations which naturally compelled developers to begin organizing their code as classes and objects?  
 
 In this post I will be taking the time to reflect on these motivations. We will go on a journey starting from simple namespaces and ending at the object-oriented paradigm. At each step in this journey, we will build on the previous and ask what problems might arise with our current implementation. Eventually, we will come to the conclusion that object-oriented programming is a *natural solution* to all of these problems. We will also get a much better appreciation for the relevance of dictionaries in Python along the way.
 
